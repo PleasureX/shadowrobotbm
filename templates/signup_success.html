@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signup Successful - PLEASUREX</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #111;
+            color: #fff;
+            text-align: center;
+        }
+
+        .message-container {
+            max-width: 400px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #222;
+            border-radius: 8px;
+        }
+
+        .success-message {
+            padding: 20px;
+            background-color: #4CAF50;
+            color: white;
+            border-radius: 4px;
+        }
+
+        .error-message {
+            padding: 20px;
+            background-color: #e60073;
+            color: white;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="message-container">
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for message in messages %}
+                    {% if "success" in message %}
+                        <div class="success-message">{{ message }}</div>
+                    {% elif "error" in message %}
+                        <div class="error-message">{{ message }}</div>
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        <p>Thank you for signing up! Please check your mailbox to confirm your email.</p>
+    </div>
+
+</body>
+</html>

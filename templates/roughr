@@ -1,0 +1,47 @@
+correct the code to just leave the profile picture function as it was before and just implement the points or update the new code and use the initial profile picture code as it was working well with my code 
+
+
+@app.route('/mining')
+@login_required
+def mining():
+    # Set default profile picture
+    profile_picture = "/static/uploads/default.jpg"  # default fallback
+    username = ""  # default empty string for username
+
+    if 'user_id' in session:
+        cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+        cursor.execute("SELECT profile_picture, username FROM users WHERE id = %s", (session['user_id'],))
+        user = cursor.fetchone()
+        
+        # If user exists and profile_picture is available, use it
+        if user:
+            # Fetch profile_picture and username from the result
+            profile_picture = user.get('profile_picture', profile_picture)
+            username = user.get('username', '')  # Default to empty string if not found
+
+    return render_template('mining.html', profile_picture=profile_picture, username=username)
+
+
+
+
+@app.route('/mining')
+@login_required
+def mining():
+    user = {
+        'profile_picture': '/static/uploads/default.jpg',
+        'username': '',
+        'points': 0  # Optional: include points or any other field
+    }
+
+    if 'user_id' in session:
+        cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+        cursor.execute("SELECT username, profile_picture, points FROM users WHERE id = %s", (session['user_id'],))
+        db_user = cursor.fetchone()
+
+        if db_user:
+            user['username'] = db_user.get('username', '')
+            user['profile_picture'] = db_user.get('profile_picture', '/static/uploads/default.jpg')
+            user['points'] = db_user.get('points', 0)
+
+    return render_template('mining.html', user=user)
+

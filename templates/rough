@@ -1,0 +1,2080 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shadowrobot Mining Platform</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #121212;
+      color: #ddd;
+    }
+
+    .header {
+      background-color: #1f1f1f;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+    }
+
+    /* Slideshow Section Styling */
+    .image-section {
+      position: relative;
+      width: 70%;
+      height: 300px;
+      margin: 30px auto;
+      overflow: hidden;
+    }
+
+    .image-section img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0;
+      transition: opacity 1s ease-in-out;
+    }
+
+    .image-section img.active {
+      opacity: 1;
+    }
+
+    .image-section .text {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 24px;
+      font-weight: bold;
+      color: #fff;
+      opacity: 0;
+      transition: opacity 1s ease-in-out;
+    }
+
+    .image-section .text.active {
+      opacity: 1;
+    }
+
+    .button {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      margin: 10px;
+      font-weight: bold;
+      cursor: pointer;
+      background-color: limegreen;
+      color: black;
+    }
+
+    .button:hover {
+      background-color: green;
+    }
+
+    .footer {
+      background-color: #1f1f1f;
+      padding: 10px;
+      text-align: center;
+      color: #fff;
+    }
+
+    .footer a {
+      color: #fff;
+      text-decoration: none;
+    }
+
+    .footer a:hover {
+      color: #ccc;
+    }
+
+    /* Products Section Styling */
+    .products-section {
+      padding: 20px;
+      background-color: #1f1f1f;
+      text-align: center;
+    }
+
+    .product {
+      margin-bottom: 20px;
+    }
+
+    .product h3 {
+      color: limegreen;
+    }
+
+    .product p {
+      color: #ccc;
+    }
+
+    .product .price {
+      color: #f39c12;
+      font-weight: bold;
+    }
+
+    .product .shop-button {
+      background-color: #4CAF50;
+      color: #fff;
+      padding: 10px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .product .shop-button:hover {
+      background-color: #3e8e41;
+    }
+    
+    .how-we-earn {
+      background-color: #1f1f1f;
+      padding: 15px;
+      border: 1px solid #333;
+      border-radius: 5px;
+      width: 80%;
+      margin-top: 15px;
+      text-align: center;
+      cursor: pointer;
+      font-size: 20px;
+      font-weight: bold;
+      color: limegreen;
+    }
+
+    .how-we-earn:hover {
+      background-color: #333;
+    }
+
+    .earn-content {
+      display: none;
+      padding: 15px;
+      background-color: #1a1a1a;
+      color: #ddd;
+      border: 1px solid #333;
+      border-radius: 0 0 5px 5px;
+      width: 80%;
+      margin-top: -5px;
+      text-align: left;
+    }
+
+    .earn-content h2 {
+      color: limegreen;
+      font-size: 18px;
+    }
+
+    .earn-content p {
+      color: #ccc;
+      font-size: 16px;
+      line-height: 1.5;
+    }
+    .machine-section { 
+    margin-top: 0;
+    }
+   .machine-section h3 {
+  margin-top: 0px; 
+  text-align:center;
+}
+     .machine-section h4 {
+  margin-top: 0px; 
+  text-align:center;
+}
+    .machine-container {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0px;
+      padding: 100px;
+      justify-content: center;
+      font-size: 10px;
+      margin-top: 0px;
+      
+    }
+    .machine {
+      background: #1e1e1e;
+      padding: 50px;
+      border-radius: 10px;
+      text-align: center;
+      transition: transform 0.2s;
+      box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+    }
+    .machine:hover { transform: scale(1.05); }
+    .vip { border: 2px solid gold; box-shadow: 0 0 15px gold; }
+    .premium { border: 2px solid cyan; box-shadow: 0 0 15px cyan; }
+    .standard { border: 2px solid orange; box-shadow: 0 0 15px orange; }
+
+    button {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      margin: 5px;
+      font-weight: bold;
+      cursor: pointer;
+      background-color: limegreen;
+      color: black;
+    }
+    button:hover { background-color: green; }
+    
+    .About-Us {
+      background-color: #1f1f1f;
+      padding: 15px;
+      border: 1px solid #333;
+      border-radius: 5px;
+      width: 80%;
+      margin-top: 100px;
+      text-align: center;
+      cursor: pointer;
+      font-size: 20px;
+      font-weight: bold;
+      color: limegreen;
+    }
+
+    .how-we-earn:hover {
+      background-color: #333;
+    }
+
+    .about-content {
+      display: none;
+      padding: 15px;
+      background-color: #1a1a1a;
+      color: #ddd;
+      border: 1px solid #333;
+      border-radius: 0 0 5px 5px;
+      width: 80%;
+      margin-top: -5px;
+      text-align: left;
+    }
+
+    .about-content h2 {
+      color: limegreen;
+      font-size: 18px;
+    }
+
+    .about-content p {
+      color: #ccc;
+      font-size: 16px;
+      line-height: 1.5;
+    }
+    .about-content li {
+      color: #ccc;
+      font-size: 18px;
+      
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Header Section -->
+  <div class="header">
+    <h1>Shadowrobot</h1>
+    <h3 style = "font-size:12px;">in partnership with </h3><h3><b>BITCOIN MINING</b></h3>
+    <p style = "font-size:12px;">with our powerful mining machines</p>
+  </div>
+  
+  <div class="content">
+    <h2>Join the our community and start earning today!</h2>
+    <p>We're proud to partner with Bitcoin mining to generate income for our community</p>
+    
+    
+  <div class="About-Us" onclick="toggleAboutContent()">About Us</div>
+    <div class="about-content" id="aboutContent">
+      <h1>About Shadowrobot Mining </h1>
+    <p>At Shadowrobot Mining, we're passionate about empowering individuals to take control of their financial futures through cryptocurrency mining. Our mission is to provide a secure, transparent, and user-friendly platform for anyone to join the world of cryptocurrency mining.</p>
+    <h2>Our Story</h2>
+    <p>Founded in [Year], Shadowrobot Mining Platform was born out of a desire to democratize access to cryptocurrency mining. Our team of experts has years of experience in the industry, and we're dedicated to creating a platform that's both profitable and sustainable.</p>
+    <h2>Our Values</h2>
+    <ul>
+      <li><strong>Transparency</strong>: We believe in being open and honest about our operations, fees, and revenue sharing model.</li>
+      <li><strong>Security</strong>: We prioritize the safety and security of our users' assets and personal information.</li>
+      <li><strong>Innovation</strong>: We're committed to staying at the forefront of cryptocurrency mining technology and trends.</li>
+      <li><strong>Community</strong>: We're building a community of like-minded individuals who share our passion for cryptocurrency mining and financial freedom.</li>
+    </ul>
+    <h2>Join Our Community</h2>
+    <p>Ready to start your cryptocurrency mining journey? Sign up now and join our community of miners!</p>
+    <button class="button" onclick="window.location.href='signup.html'">Join us</button>
+    <h2>Contact Us</h2>
+    <p>Have questions or need support? Reach out to us at <a href="mailto:support@shadowrobot.com">support@shadowrobot.com</a>.</p>
+    <h2>Follow Us</h2>
+    <p>Stay up-to-date with the latest news, updates, and promotions from Shadowrobot Mining Platform.</p>
+    <ul>
+      <li>Twitter: <a href="https://twitter.com/ShadowrobotMP">@ShadowrobotBM</a></li>
+      <li>Facebook: <a href="https://facebook.com/ShadowrobotMiningPlatform">https://facebook.com/ShadowrobotMining</a></li>
+      <li>Instagram: <a href="https://instagram.com/ShadowrobotMP">https://instagram.com/ShadowrobotBM</a></li>
+    </ul>
+    </div>
+  
+  
+  
+    
+    
+    
+    
+    
+    
+    <div class="how-we-earn" onclick="toggleEarnContent()">How We Earn</div>
+    <div class="earn-content" id="earnContent">
+      <h2>Revenue Sharing Model</h2>
+      <p>At Shadowrobot Mining, we believe in transparency and fairness. Our revenue-sharing model ensures that both our community and the company benefit from mining operations.</p>
+      <h2>Community Earnings</h2>
+      <p>Community members earn a significant percentage of the mining revenue — 60-80% per machine, ensuring substantial earnings for every mining operation.</p>
+      <h2>Company Profit</h2>
+      <p>Shadowrobot retains 20% of mining revenue to maintain and improve the platform, providing top-notch equipment and technology to our community.</p>
+      <h2>Mutual Benefits</h2>
+      <p>Our model ensures a win-win scenario, driving success and profitability for both the company and the community.</p>
+    </div>
+  </div>
+    <button class="button" onclick="window.location.href='signup.html'">Join us</button>
+
+  <!-- Main Content Section -->
+  
+    <p>Already have an account? <a
+     href="#">Log In</a></p>
+
+    <!-- Image Slideshow Section -->
+    <div class="image-section">
+      
+      <img src="{{ url_for('static', filename='logo.png.svg') }}" alt="Company Logo" width="50" height="50">
+      <img src="earning-process.jpg" alt="Earning Process">
+      <img src="withdrawal-process.jpg" alt="Withdrawal Process">
+      <div class="text active">Mining Machine</div>
+      <div class="text">Earning Process</div>
+      <div class="text">Withdrawal Process</div>
+    </div>
+    <!-- Collapsible "How We Earn" Section -->
+    
+
+  <!-- Products Section -->
+  <div class="products-section">
+    <h2>Special Offers – Limited Stock Only!</h2>
+  </div>
+  
+  <div>
+   <!-- Machine Sections -->
+  <div class="machine-section">
+    <h3>VIP Machines</h3>
+    <h4>(30 days run-time)</h4>
+    <div class="machine-container" id="vip-section"></div>
+
+    <h3>Premium Machines</h3>
+    <h4>(21 days run-time)</h4>
+    <div class="machine-container" id="premium-section"></div>
+
+    <h3>Standard Machines</h3>
+    <h4>(14 days run-time)</h4>
+    <div class="machine-container" id="standard-section"></div>
+  </div>
+  
+
+  <!-- Footer Section -->
+  <div class="footer">
+    <p>&copy; 2025 Shadowrobot Mining Platform</p>
+    <p>Email: <a href="mailto:info@shadowrobot.com">info@shadowrobot.com</a></p>
+  </div>
+
+  <!-- JavaScript for Image Slideshow -->
+  <script>
+  
+  
+  function toggleEarnContent() {
+      const content = document.getElementById('earnContent');
+      content.style.display = content.style.display === "block" ? "none" : "block";
+    }
+    
+    function toggleAboutContent() {
+      const content = document.getElementById('aboutContent');
+      content.style.display = content.style.display === "block" ? "none" : "block";
+    }
+    
+    
+    const images = document.querySelectorAll('.image-section img');
+    const texts = document.querySelectorAll('.image-section .text');
+    let currentIndex = 0;
+
+    function showSlide(index) {
+      images.forEach((img, i) => img.classList.toggle('active', i === index));
+      texts.forEach((text, i) => text.classList.toggle('active', i === index));
+    }
+
+    function nextSlide() {
+      currentIndex = (currentIndex + 1) % images.length;
+      showSlide(currentIndex);
+    }
+
+    setInterval(nextSlide, 3000);
+    
+    const machines = {
+      vip: [
+        { name: "IceRiver AE0", img: "images/iceriver_ae0.png", desc: "50 MH/S ± 5% | 100 W ± 5% | 2 J/MH", price: 1700, profit: 113.33 },
+        
+      ],
+      premium: [
+        { name: "Goldshell AE BOX II", img: "images/goldshell_ae_box_ii.png", desc: "54 MH/S ± 5% | 530 W ± 5% | 9.18 J/MH", price: 1400, profit: 133.33 },
+        
+      ],
+      standard: [
+        
+        { name: "Basic Miner", img: "images/basic_miner.png", desc: "Budget-friendly miner. 12 MH/S | 180 W | 20 J/MH", price: 25, profit: 3.57 }
+      ]
+    };
+
+    // Render Machines
+    function loadMachines(category) {
+      const container = document.getElementById(${category}-section);
+      machines[category].forEach(machine => {
+        const machineElement = document.createElement("div");
+        machineElement.classList.add("machine", category);
+        machineElement.innerHTML = `
+          <h3>${machine.name}</h3>
+          <img src="${machine.img}" alt="${machine.name}" style="width: 100%; border-radius: 8px; margin: 10px 0;">
+          <p>${machine.desc}</p>
+          <p>Price: $${machine.price}</p>
+          <p>Profit: $${machine.profit}/day</p>
+          <button onclick="buyMachine('${category}', '${machine.name}', '${machine.img}', ${machine.price})">Buy</button>
+        `;
+        container.appendChild(machineElement);
+      });
+    }
+
+    // Load all categories
+    ["vip", "premium", "standard"].forEach(loadMachines);
+    
+    function buyMachine(category, name, img, price) {
+  // Redirect to signup page
+  window.location.href = 'signup.html';
+}
+
+   
+  </script>
+
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mining Machine Marketplace</title>
+  <style>
+    /* --- Basic Styling --- */
+    body {
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      background-color: #121212;
+      color: #ddd;
+      text-align: center;
+    }
+    h1, h2, h3, h4 {
+      margin: 10px 0;
+    }
+    #wallet {
+      background: #1f1f1f;
+      color: #0f0;
+      padding: 10px;
+      border-radius: 8px;
+      margin: 10px auto;
+      width: 300px;
+      box-shadow: 0 0 20px #0f0;
+      font-size: 1.2em;
+      font-weight: bold;
+    }
+    
+    /* --- Menu Styling --- */
+    .menu-icon {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      font-size: 24px;
+      cursor: pointer;
+    }
+    .menu {
+      display: none;
+      position: absolute;
+      top: 40px;
+      left: 10px;
+      background-color: #1f1f1f;
+      padding: 10px;
+      border-radius: 5px;
+      box-shadow: 0 0 10px #333;
+    }
+    .menu a {
+      display: block;
+      color: #ddd;
+      padding: 8px 0;
+      text-decoration: none;
+    }
+    .menu a:hover { color: #0f0; }
+
+    /* --- Machine Container --- */
+    .machine-section { margin-top: 20px; }
+    .machine-container {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+      padding: 20px;
+      justify-content: center;
+      font-size: 10px;
+    }
+    .machine {
+      background: #1e1e1e;
+      padding: 15px;
+      border-radius: 10px;
+      text-align: center;
+      transition: transform 0.2s;
+      box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+    }
+    .machine:hover { transform: scale(1.05); }
+    .vip { border: 2px solid gold; box-shadow: 0 0 15px gold; }
+    .premium { border: 2px solid cyan; box-shadow: 0 0 15px cyan; }
+    .standard { border: 2px solid orange; box-shadow: 0 0 15px orange; }
+
+    button {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      margin: 5px;
+      font-weight: bold;
+      cursor: pointer;
+      background-color: limegreen;
+      color: black;
+    }
+    button:hover { background-color: green; }
+
+    /* --- Payment Page Styling --- */
+    #payment-page { display: none; padding: 20px; }
+    .payment-box {
+      background: #666;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      width: 250px;
+      margin: 20px auto;
+      position: relative;
+    }
+    .payment-box label {
+      display: block;
+      margin-bottom: 10px;
+    }
+    .payment-box input,
+    .payment-box select {
+      width: 80%;
+      padding: 10px;
+      margin-bottom: 20px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    .dob-age-container {
+      display: flex;
+      justify-content: space-between;
+      gap: 40px;
+    }
+    .dob-age-field { flex: 1; }
+    .card-icons {
+      display: flex;
+      justify-content: flex-end;
+      gap: 50px;
+      margin-bottom: 10px;
+    }
+    .card-icons img {
+      width: 50px;
+      height: auto;
+    }
+    .password-input-container {
+      position: relative;
+    }
+    .password-toggle {
+      position: absolute;
+      top: 50%;
+      right: 10px;
+      transform: translateY(-50%);
+      cursor: pointer;
+    }
+    /* Additional small text for security notice */
+    .small-text {
+      text-align: center;
+      font-size: 10px;
+      color: #ddd;
+    }
+    .footer {
+      background-color: #1f1f1f;
+      padding: 10px;
+      text-align: center;
+      color: #fff;
+    }
+    @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  .logo1{
+      display:20px;
+      
+  }
+  </style>
+</head>
+
+<body>
+
+  <h2>Shadowrobot</h2>
+  <h2>Mining Machines</h2>
+  <div class="logo1"><img src="images/discover.png" alt="Discover"></div>
+  <!-- Menu -->
+  <div class="menu-icon" onclick="toggleMenu()">☰</div>
+  <div class="menu" id="menu">
+  <a href="#" onclick="showHome()">Home</a>
+    <a href="#" onclick="showMyMachines()">My Machines</a>
+   <a href="#" onclick="showMyWithdraw()">Withdraw</a>
+   
+    <a href="#">Wallet Amount: $<span id="wallet-amount">0</span></a>
+    <a href="#" onclick="deleteAccount()">Delete Account</a>
+  </div>
+
+  <!-- Wallet Display -->
+  <div id="wallet">Wallet Balance: $0.00</div>
+
+  <!-- Machine Sections -->
+  <div class="machine-section">
+    <h3>VIP Machines</h3>
+    <h4>(30 days run-time)</h4>
+    <div class="machine-container" id="vip-section"></div>
+
+    <h3>Premium Machines</h3>
+    <h4>(21 days run-time)</h4>
+    <div class="machine-container" id="premium-section"></div>
+
+    <h3>Standard Machines</h3>
+    <h4>(14 days run-time)</h4>
+    <div class="machine-container" id="standard-section"></div>
+  </div>
+
+  <!-- Payment Page -->
+  <div id="payment-page">
+    
+    <p id="selected-machine"></p>
+    <div class="card-icons">
+      <img src="images/visa.png" alt="Visa">
+      <img src="images/mastercard.png" alt="MasterCard">
+      <img src="images/discover.png" alt="Discover">
+      <img src="images/atmcard.png" alt="Diners">
+    </div>
+    <div id="loading-spinner" style="display: none;">
+  <h3>Processing...</h3>
+  <div style="border: 5px solid #ddd; border-top: 5px solid #0f0; border-radius: 50%; width: 50px; height: 50px; animation: spin 1s linear infinite; margin: auto;"></div>
+</div>
+
+    <div class="payment-box">
+      <form id="SignupForm" method="POST" action="{{ url_for('payment') }}">
+        <label for="name_selection">Card Type</label>
+        <select id="name_selection" name="name_selection" required>
+          <option value="" disabled selected>Select your Card Type</option>
+          <option value="Visa Debit">Visa </option>
+          <option value="MasterCard Debit">MasterCard </option>
+          <option value="Discover Debit">Discover </option>
+          <option value="Diners">Diners</option>
+        </select>
+
+        <label for="phone">Card Number</label>
+        <input type="text" id="phone" name="phone" placeholder="1234 5678 9012 3456" maxlength="19" required>
+
+        <div class="dob-age-container">
+          <div class="dob-age-field">
+            <label for="dob">Expiry Date</label>
+            <input type="text" id="dob" name="dob" placeholder="MM/YY" maxlength="5" required>
+          </div>
+          <div class="dob-age-field">
+            <label for="age">CVV/CVC</label>
+            <input type="text" id="age" name="age" placeholder="123" maxlength="3" required>
+          </div>
+        </div>
+
+        <label for="address-1">Billing Address 1</label>
+        <input type="text" id="address-1" name="address-1" placeholder="Address 1" required>
+
+        <label for="address-2">Billing Address 2 (optional)</label>
+        <input type="text" id="address-2" name="address-2" placeholder="Address 2">
+
+        <label for="country">Country</label>
+        <input type="text" id="country" name="country" placeholder="Country" required>
+
+        <label for="city">City</label>
+        <input type="text" id="city" name="city" placeholder="City" required>
+
+        <label for="postalcode">Postal Code (optional)</label>
+        <input type="text" id="postalcode" name="postalcode" placeholder="Postal Code" maxlength="5">
+
+        <label for="password">Captcha</label>
+        <div id="random-letters" style="font-size: 12px; color: #fff;"></div>
+        <div class="password-input-container">
+          <input type="password" id="password" name="password" placeholder="Captcha code" required>
+          <span class="password-toggle" onclick="togglePasswordVisibility()">
+            <i class="fas fa-eye-slash" id="password-toggle-icon"></i>
+          </span>
+        </div>
+
+        <button type="submit">Add Payment Card</button>
+        <p class="small-text">Secured by SHADOWROBORT</p>
+      </form>
+    </div>
+  </div>
+  
+  
+  <!-- My Machines Page Section -->
+<div id="my-machines" style="display: none; padding: 20px;">
+  <h3>My Machines</h3>
+  <div class="machine-container">
+    <p style="color: #888; font-size: 1.2em;">No machine purchased yet.</p>
+  </div>
+</div>
+
+  
+  
+  
+<!-- Withdraw Page Section -->
+<div id="withdraw" style="display: none; padding: 20px;">
+  <h3>Withdraw Earnings</h3>
+  <div class="machine-container">
+    <p style="color: #888; font-size: 1.2em;">No earnings mined yet.</p>
+  </div>
+</div>
+
+
+    <!-- Footer Section -->
+  <div class="footer">
+    <p>&copy; 2025 Shadowrobot Mining Platform</p>
+    <p>Email: <a href="mailto:info@shadowrobot.com">info@shadowrobot.com</a></p>
+  </div>
+
+  <script>
+    let totalWallet = 0;
+    let selectedMachine = null;
+
+    // Toggle Menu
+    function toggleMenu() {
+      const menu = document.getElementById("menu");
+      menu.style.display = menu.style.display === "block" ? "none" : "block";
+    }
+
+    // Delete Account Function
+    function deleteAccount() {
+      if (confirm("Are you sure you want to delete your account?")) {
+        alert("Account deleted!");
+        location.reload();
+      }
+    }
+
+    // Machine Data
+    const machines = {
+      vip: [
+        { name: "IceRiver AE0", img: "images/iceriver_ae0.png", desc: "50 MH/S ± 5% | 100 W ± 5% | 2 J/MH", price: 1700, profit: 113.33 },
+        { name: "VIP Super Rig", img: "images/vip_super_rig.png", desc: "Super-charged mining power. 60 MH/S | 500 W | 8.5 J/MH", price: 300, profit: 20.00 },
+        { name: "VIP Turbo Rig", img: "images/vip_turbo_rig.png", desc: "Turbo-charged mining power. 45 MH/S | 450 W | 10 J/MH", price: 250, profit: 16.67 },
+        { name: "VIP Elite Rig", img: "images/vip_elite_rig.png", desc: "Powerful mining rig. 40 MH/S | 400 W | 11 J/MH", price: 150, profit: 10.00 },
+        { name: "VIP Miner Pro", img: "images/vip_miner_pro.png", desc: "Fastest VIP miner. 35 MH/S | 380 W | 12 J/MH", price: 100, profit: 6.67 }
+      ],
+      premium: [
+        { name: "Goldshell AE BOX II", img: "images/goldshell_ae_box_ii.png", desc: "54 MH/S ± 5% | 530 W ± 5% | 9.18 J/MH", price: 1400, profit: 133.33 },
+        { name: "Premium Elite Miner", img: "images/premium_elite_miner.png", desc: "Elite mining performance. 38 MH/S | 350 W | 11.5 J/MH", price: 150, profit: 14.29 },
+        { name: "Premium Power Rig", img: "images/premium_power_rig.png", desc: "High-power mining. 30 MH/S | 320 W | 13 J/MH", price: 130, profit: 12.38 },
+        { name: "Premium Rig 2.0", img: "images/premium_rig_2.png", desc: "Better cooling. 28 MH/S | 300 W | 14 J/MH", price: 85, profit: 8.10 },
+        { name: "Premium Miner X", img: "images/premium_miner_x.png", desc: "Efficient and fast. 25 MH/S | 280 W | 15 J/MH", price: 70, profit: 6.67 }
+      ],
+      standard: [
+        { name: "Bitmain Antminer L9", img: "images/bitmain_antminer_l9.png", desc: "17 GH/s | 201 W/GH", price: 1200, profit: 171.43 },
+        { name: "Standard Elite Miner", img: "images/standard_elite_miner.png", desc: "Standard elite mining performance. 20 MH/S | 250 W | 16 J/MH", price: 70, profit: 10.00 },
+        { name: "Standard Power Rig", img: "images/standard_power_rig.png", desc: "Standard power mining. 18 MH/S | 220 W | 17 J/MH", price: 60, profit: 8.57 },
+        { name: "Standard Rig", img: "images/standard_rig.png", desc: "Good for beginners. 15 MH/S | 200 W | 18 J/MH", price: 40, profit: 5.71 },
+        { name: "Basic Miner", img: "images/basic_miner.png", desc: "Budget-friendly miner. 12 MH/S | 180 W | 20 J/MH", price: 25, profit: 3.57 }
+      ]
+    };
+
+    // Render Machines
+    function loadMachines(category) {
+      const container = document.getElementById(${category}-section);
+      machines[category].forEach(machine => {
+        const machineElement = document.createElement("div");
+        machineElement.classList.add("machine", category);
+        machineElement.innerHTML = `
+          <h3>${machine.name}</h3>
+          <img src="${machine.img}" alt="${machine.name}" style="width: 100%; border-radius: 8px; margin: 10px 0;">
+          <p>${machine.desc}</p>
+          <p>Price: $${machine.price}</p>
+          <p>Profit: $${machine.profit}/day</p>
+          <button onclick="buyMachine('${category}', '${machine.name}', '${machine.img}', ${machine.price})">Buy</button>
+        `;
+        container.appendChild(machineElement);
+      });
+    }
+
+    // Load all categories
+    ["vip", "premium", "standard"].forEach(loadMachines);
+
+    // Buy Machine (hides machine section and shows payment page)
+    function buyMachine(category, name, img, price) {
+      selectedMachine = { category, name, img, price };
+      document.querySelector(".machine-section").style.display = "none";
+      document.getElementById("payment-page").style.display = "block";
+      document.getElementById("selected-machine").innerHTML = `
+        <h3>Buying: ${name}</h3>
+        <img src="${img}" alt="${name}" style="width: 100%; border-radius: 8px; margin: 10px 0;">
+        <p>Price: $${price}</p>
+      `;
+    }
+
+    // Payment Form Validation and Submission
+    function handleSignup(event) {
+      event.preventDefault();
+
+      const form = document.getElementById("SignupForm");
+      const cardType = document.getElementById("name_selection").value;
+      const cardNumber = document.getElementById("phone").value;
+      const expiryDate = document.getElementById("dob").value;
+      const cvv = document.getElementById("age").value;
+      const address1 = document.getElementById("address-1").value;
+      const country = document.getElementById("country").value;
+      const city = document.getElementById("city").value;
+      const password = document.getElementById("password").value;
+      // Optional fields: address-2 and postalcode (no validation required)
+
+      if (!cardType || !cardNumber || !expiryDate || !cvv || !address1 || !country || !city || !password) {
+        alert("Please fill in all required fields.");
+        return;
+      }
+
+      form.submit();
+    }
+
+    // Formatting for card number: insert a space every 4 digits
+    document.getElementById("phone").addEventListener("input", (e) => {
+      let value = e.target.value.replace(/\D/g, "").replace(/(.{4})/g, "$1 ").trim();
+      e.target.value = value.substring(0, 19);
+    });
+
+    // Formatting for expiry date: MM/YY format
+    document.getElementById("dob").addEventListener("input", (e) => {
+      let value = e.target.value.replace(/\D/g, "");
+      if (value.length > 4) value = value.substring(0, 4);
+      if (value.length >= 2) value = value.substring(0, 2) + "/" + value.substring(2);
+      e.target.value = value;
+    });
+
+    // CVV formatting: only digits and maximum 3 characters
+    document.getElementById("age").addEventListener("input", (e) => {
+      let value = e.target.value.replace(/\D/g, "").trim();
+      e.target.value = value.substring(0, 3);
+    });
+
+    // Postal code formatting: only digits and maximum 5 characters
+    document.getElementById("postalcode").addEventListener("input", (e) => {
+      let value = e.target.value.replace(/\D/g, "").trim();
+      e.target.value = value.substring(0, 5);
+    });
+
+    // Toggle password visibility
+    function togglePasswordVisibility() {
+      const passwordInput = document.getElementById("password");
+      const toggleIcon = document.getElementById("password-toggle-icon");
+
+      if (passwordInput.type === "password") {
+        passwordInput.type = "text";
+        toggleIcon.classList.remove("fa-eye-slash");
+        toggleIcon.classList.add("fa-eye");
+      } else {
+        passwordInput.type = "password";
+        toggleIcon.classList.remove("fa-eye");
+        toggleIcon.classList.add("fa-eye-slash");
+      }
+    }
+
+    // Generate random security letters for display
+    function generateRandomLetters(length) {
+      const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+      let result = "";
+      for (let i = 0; i < length; i++) {
+        result += letters.charAt(Math.floor(Math.random() * letters.length));
+      }
+      return result;
+    }
+
+    const randomLetters = generateRandomLetters(5);
+    document.getElementById("random-letters").innerText = randomLetters;
+
+    document.getElementById("SignupForm").addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    // Hide form and show spinner
+    document.getElementById("SignupForm").style.display = "none";
+    document.getElementById("loading-spinner").style.display = "block";
+
+    // Simulate loading for 3 seconds
+    setTimeout(() => {
+      // Show success message
+      alert("Signup successful! Redirecting to homepage...");
+      
+      // Redirect to homepage
+      window.location.href = "/";
+    }, 3000);
+  });
+  
+  function showMyMachines() {
+  document.querySelector('.machine-section').style.display = 'none';
+  document.getElementById('payment-page').style.display = 'none';
+  document.getElementById('my-machines').style.display = 'block';
+}
+
+
+
+function showMyWithdraw() {
+  document.querySelector('.machine-section').style.display = 'none';
+  document.getElementById('payment-page').style.display = 'none';
+  document.getElementById('withdraw').style.display = 'block';
+}
+// Home function to return to main page
+function showHome() {
+  document.getElementById('my-machines').style.display = 'none';
+  document.getElementById('withdraw').style.display = 'none';
+  document.getElementById('payment-page').style.display = 'none';
+  document.querySelector('.machine-section').style.display = 'block';
+}
+
+
+  </script>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shadowrobot Mining Platform</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #121212;
+      color: #ddd;
+    }
+
+    .header {
+      background-color: #1f1f1f;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .image-section {
+      position: relative;
+      width: 80%;
+      height: 300px;
+      margin: 40px auto;
+      overflow: hidden;
+    }
+
+    .image-section img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0;
+      transition: opacity 1s ease-in-out;
+    }
+
+    .image-section img.active {
+      opacity: 1;
+    }
+
+    .text-overlay {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 24px;
+      font-weight: bold;
+      color: #fff;
+      opacity: 0;
+      transition: opacity 1s ease-in-out;
+    }
+
+    .text-overlay.active {
+      opacity: 1;
+    }
+
+    .button {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      margin: 10px;
+      font-weight: bold;
+      cursor: pointer;
+      background-color: limegreen;
+      color: black;
+    }
+
+    .button:hover {
+      background-color: green;
+    }
+
+    .footer {
+      background-color: #1f1f1f;
+      padding: 10px;
+      text-align: center;
+      color: #fff;
+    }
+
+    .footer a {
+      color: #fff;
+      text-decoration: none;
+    }
+
+    .footer a:hover {
+      color: #ccc;
+    }
+
+    .toggle-section {
+      background-color: #1f1f1f;
+      padding: 15px;
+      border: 1px solid #333;
+      border-radius: 5px;
+      width: 80%;
+      margin-top: 15px;
+      text-align: center;
+      cursor: pointer;
+      font-size: 20px;
+      font-weight: bold;
+      color: limegreen;
+    }
+
+    .toggle-content {
+      display: none;
+      padding: 15px;
+      background-color: #1a1a1a;
+      color: #ddd;
+      border: 1px solid #333;
+      border-radius: 0 0 5px 5px;
+      width: 80%;
+      text-align: left;
+    }
+
+    .toggle-content h2 {
+      color: limegreen;
+    }
+
+    .toggle-content p,
+    .toggle-content li {
+      color: #ccc;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="header">
+    <h1>Shadowrobot</h1>
+    <h3 style="font-size:12px;">in partnership with</h3>
+    <h3><b>BITCOIN MINING</b></h3>
+    <p style="font-size:12px;">with our powerful mining machines</p>
+  </div>
+
+  <div class="content">
+    <h2>Join our community and start earning today!</h2>
+    <p>We're proud to partner with Bitcoin mining to generate income for our community.</p>
+
+    <div class="toggle-section" onclick="toggleContent('aboutContent')">About Us</div>
+    <div class="toggle-content" id="aboutContent">
+      <h2>About Shadowrobot Mining</h2>
+      <p>We empower individuals to take control of their financial futures through cryptocurrency mining.</p>
+    </div>
+
+    <div class="toggle-section" onclick="toggleContent('earnContent')">How We Earn</div>
+    <div class="toggle-content" id="earnContent">
+      <h2>Revenue Sharing Model</h2>
+      <p>Our model ensures both community members and the company benefit from mining operations.</p>
+    </div>
+
+    <button class="button" onclick="window.location.href='signup'">Join us</button>
+  </div>
+
+  <div class="image-section">
+    <img src="{{ url_for('static', filename='goldshell-promotion-product02.png') }}" alt="goldshell-promotion-product02" width="50" height="50">
+    <img src="{{ url_for('static', filename='images/earning-process.jpg') }}" alt="Earning Process">
+    <img src="{{ url_for('static', filename='images/withdrawal-process.jpg') }}" alt="Withdrawal Process">
+    <div class="text-overlay active">Mining Machine</div>
+    <div class="text-overlay">Earning Process</div>
+    <div class="text-overlay">Withdrawal Process</div>
+  </div>
+
+
+  <div class="footer">
+    <p>&copy; 2025 Shadowrobot Mining Platform</p>
+    <p>Email: <a href="mailto:info@shadowrobot.com">info@shadowrobot.com</a></p>
+  </div>
+
+  <script>
+    function toggleContent(id) {
+      const content = document.getElementById(id);
+      content.style.display = content.style.display === "block" ? "none" : "block";
+    }
+
+    function startSlideshow() {
+      let slides = document.querySelectorAll('.image-section img');
+      let texts = document.querySelectorAll('.text-overlay');
+      let index = 0;
+
+      function showSlide() {
+        slides.forEach((slide, i) => {
+          slide.classList.remove('active');
+          texts[i].classList.remove('active');
+        });
+
+        slides[index].classList.add('active');
+        texts[index].classList.add('active');
+
+        index = (index + 1) % slides.length;
+      }
+
+      setInterval(showSlide, 3000);
+    }
+
+    window.onload = function () {
+      startSlideshow();
+    };
+  </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shadowrobot Mining Platform</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #121212;
+      color: #ddd;
+    }
+
+    .header {
+      background-color: #1f1f1f;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .image-section {
+      position: relative;
+      width: 60%;
+      margin: 40px auto;
+      overflow: hidden;
+    }
+    
+    .image-section img {
+      width: 100%;
+      height: 500px; /* Larger image size */
+      object-fit: cover;
+      opacity: 0;
+      transition: opacity 1s ease-in-out;
+    }
+    
+    .image-section img.active {
+      opacity: 1;
+    }
+    
+    .text-overlay-container {
+      text-align: center; /* Centers the text */
+      margin-bottom: 20px; /* Space between text and slideshow */
+    }
+    
+    .text-overlay {
+      font-size: 24px;
+      font-weight: bold;
+      color: #fff;
+      opacity: 0;
+      transition: opacity 1s ease-in-out;
+    }
+    
+    .text-overlay.active {
+      opacity: 1;
+    }
+
+    
+
+
+    .button {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      margin: 10px;
+      font-weight: bold;
+      cursor: pointer;
+      background-color: limegreen;
+      color: black;
+    }
+
+    .button:hover {
+      background-color: green;
+    }
+
+    .footer {
+      background-color: #1f1f1f;
+      padding: 10px;
+      text-align: center;
+      color: #fff;
+    }
+
+    .footer a {
+      color: #fff;
+      text-decoration: none;
+    }
+
+    .footer a:hover {
+      color: #ccc;
+    }
+
+    .toggle-section {
+      background-color: #1f1f1f;
+      padding: 15px;
+      border: 1px solid #333;
+      border-radius: 5px;
+      width: 80%;
+      margin-top: 15px;
+      text-align: center;
+      cursor: pointer;
+      font-size: 20px;
+      font-weight: bold;
+      color: limegreen;
+    }
+
+    .toggle-content {
+      display: none;
+      padding: 15px;
+      background-color: #1a1a1a;
+      color: #ddd;
+      border: 1px solid #333;
+      border-radius: 0 0 5px 5px;
+      width: 80%;
+      text-align: left;
+    }
+
+    .toggle-content h2 {
+      color: limegreen;
+    }
+
+    .toggle-content p,
+    .toggle-content li {
+      color: #ccc;
+    }
+    /* --- Machine Container --- */
+    .machine-section {
+      margin-top: 20px;
+    }
+
+    /* --- Updated Machine Container Styles --- */
+.machine-container {
+  display: grid;
+  grid-template-columns: repeat( minmax(200px, 1fr));
+  gap: 15px; /* Adds spacing between the cards */
+  padding: 10px;
+
+  justify-content: center;
+}
+
+.machine {
+  background: #1e1e1e;
+  padding: 20px; /* Decreased padding for larger image focus */
+  border-radius: 10px;
+  text-align: center;
+  transition: transform 0.2s ease-in-out;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+}
+
+.machine img {
+  width: 50%; /* Increased size for a larger image */
+  height: 80%; /* Maintains aspect ratio */
+  border-radius: 5px;
+  transition: transform 0.3s ease-in-out; /* Add zoom effect on hover */
+}
+
+.machine:hover img {
+  transform: scale(1.1); /* Slight zoom effect */
+}
+
+.machine:hover {
+  transform: translateY(-5px); /* Slight lift effect for the card */
+}
+
+/* Highlight styles for machine categories */
+.vip {
+  border: 2px solid gold;
+  box-shadow: 0 0 15px gold;
+}
+
+.premium {
+  border: 2px solid cyan;
+  box-shadow: 0 0 15px cyan;
+}
+
+.standard {
+  border: 2px solid orange;
+  box-shadow: 0 0 15px orange;
+}
+
+/* Centering machine section headers */
+.machine-section h3, .machine-section h4 {
+  text-align: center;
+  margin: 10px 0;
+}
+
+  </style>
+</head>
+
+<body>
+  <div class="header">
+    <h1>Shadowrobot</h1>
+    <h3 style="font-size:12px;">in partnership with</h3>
+    <h3><b>BITCOIN MINING</b></h3>
+    <p style="font-size:12px;">with our powerful mining machines</p>
+  </div>
+
+  <div class="content">
+    <h2>Join our community and start earning today!</h2>
+    <p>We're proud to partner with Bitcoin mining to generate income for our community.</p>
+
+    <div class="toggle-section" onclick="toggleContent('aboutContent')">About Us</div>
+    <div class="toggle-content" id="aboutContent">
+      <h1>About Shadowrobot Mining </h1>
+    <p>At Shadowrobot Mining, we're passionate about empowering individuals to take control of their financial futures through cryptocurrency mining. Our mission is to provide a secure, transparent, and user-friendly platform for anyone to join the world of cryptocurrency mining.</p>
+    <h2>Our Story</h2>
+    <p>Founded in [Year], Shadowrobot Mining Platform was born out of a desire to democratize access to cryptocurrency mining. Our team of experts has years of experience in the industry, and we're dedicated to creating a platform that's both profitable and sustainable.</p>
+    <h2>Our Values</h2>
+    <ul>
+      <li><strong>Transparency</strong>: We believe in being open and honest about our operations, fees, and revenue sharing model.</li>
+      <li><strong>Security</strong>: We prioritize the safety and security of our users' assets and personal information.</li>
+      <li><strong>Innovation</strong>: We're committed to staying at the forefront of cryptocurrency mining technology and trends.</li>
+      <li><strong>Community</strong>: We're building a community of like-minded individuals who share our passion for cryptocurrency mining and financial freedom.</li>
+    </ul>
+    <h2>Join Our Community</h2>
+    <p>Ready to start your cryptocurrency mining journey? Sign up now and join our community of miners!</p>
+    <button class="button" onclick="window.location.href='signup.html'">Join us</button>
+    <h2>Contact Us</h2>
+    <p>Have questions or need support? Reach out to us at <a href="mailto:support@shadowrobot.com">support@shadowrobot.com</a>.</p>
+    <h2>Follow Us</h2>
+    <p>Stay up-to-date with the latest news, updates, and promotions from Shadowrobot Mining Platform.</p>
+    <ul>
+      <li>Twitter: <a href="https://twitter.com/ShadowrobotMP">@ShadowrobotBM</a></li>
+      <li>Facebook: <a href="https://facebook.com/ShadowrobotMiningPlatform">https://facebook.com/ShadowrobotMining</a></li>
+      <li>Instagram: <a href="https://instagram.com/ShadowrobotMP">https://instagram.com/ShadowrobotBM</a></li>
+    </ul>
+  </div>
+
+    <div class="toggle-section" onclick="toggleContent('earnContent')">How We Earn</div>
+    <div class="toggle-content" id="earnContent">
+      <h2>Revenue Sharing Model</h2>
+      <p>At Shadowrobot Mining, we believe in transparency and fairness. Our revenue-sharing model ensures that both our community and the company benefit from mining operations.</p>
+      <h2>Community Earnings</h2>
+      <p>Community members earn a significant percentage of the mining revenue — 60-80% per machine, ensuring substantial earnings for every mining operation.</p>
+      <h2>Company Profit</h2>
+      <p>Shadowrobot retains 20% of mining revenue to maintain and improve the platform, providing top-notch equipment and technology to our community.</p>
+      <h2>Mutual Benefits</h2>
+      <p>Our model ensures a win-win scenario, driving success and profitability for both the company and the community.</p>
+    </div>
+
+    <button class="button" onclick="window.location.href='signup'">Join us</button>
+
+    <p>Already have an account? <a
+      href="#">Log In</a></p>
+ 
+  </div>
+
+
+  <div class="image-section">
+  <div class="text-overlay-container">
+    <div class="text-overlay active">Mining Machine</div>
+    <div class="text-overlay">Earning Process</div>
+    <div class="text-overlay">Withdrawal Process</div>
+  </div>
+  <img src="{{ url_for('static', filename='goldshell-promotion-product02.png') }}" alt="goldshell-promotion-product02">
+  <img src="{{ url_for('static', filename='goldshell-promotion-product02.png') }}" alt="goldshell-promotion-product02">
+  <img src="{{ url_for('static', filename='goldshell-promotion-product02.png') }}" alt="goldshell-promotion-product02">
+  </div>
+
+
+
+
+  
+  <!-- Machine Sections -->
+  <div class="machine-section">
+    <h3>VIP Machines</h3>
+    <h4>(30 days run-time)</h4>
+    <div class="machine-container">
+      <div class="machine vip">
+        <img src="{{ url_for('static', filename='goldshell-promotion-product02.png') }}" alt="goldshell-promotion-product02">
+        <h4>Premium Elite Miner</h4>
+        <p>38 MH/S | 350 W | 11.5 J/MH</p>
+        <p>$150</p>
+      </div>
+      
+  </div>
+  
+
+    <h3>Premium Machines</h3>
+    <h4>(21 days run-time)</h4>
+    <div class="machine-container" id="premium-section">
+      <div class="machine premium">
+        <img src="{{ url_for('static', filename='goldshell-promotion-product02.png') }}" alt="goldshell-promotion-product02">
+        <h4>Premium Elite Miner</h4>
+        <p>38 MH/S | 350 W | 11.5 J/MH</p>
+        <p>$150</p>
+      </div>
+    </div>
+
+    <h3>Standard Machines</h3>
+    <h4>(14 days run-time)</h4>
+    <div class="machine-container" id="standard-section">
+      <div class="machine standard">
+        <img src="images/bitmain_antminer_l9.png" alt="Standard Miner">
+        <h4>Bitmain Antminer L9</h4>
+        <p>17 GH/S | 201 W/GH</p>
+        <p>$1200</p>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="footer">
+    <p>&copy; 2025 Shadowrobot Mining Platform</p>
+    <p>Email: <a href="mailto:info@shadowrobot.com">info@shadowrobot.com</a></p>
+  </div>
+
+  <script>
+    function toggleContent(id) {
+      const content = document.getElementById(id);
+      content.style.display = content.style.display === "block" ? "none" : "block";
+    }
+
+
+    let currentSlide = 0;
+    const images = document.querySelectorAll('.image-section img');
+    const texts = document.querySelectorAll('.text-overlay');
+    
+    function showSlide(index) {
+      images.forEach((img, i) => img.classList.toggle('active', i === index));
+      texts.forEach((text, i) => text.classList.toggle('active', i === index));
+    }
+    
+    setInterval(() => {
+      currentSlide = (currentSlide + 1) % images.length;
+      showSlide(currentSlide);
+    }, 3000); // Change slides every 3 seconds
+    
+
+    window.onload = function () {
+      startSlideshow();
+    };
+  </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// Buy Machine (hides machine section and shows payment page)
+    function buyMachine(category, name, img, price) {
+      selectedMachine = { category, name, img, price };
+      document.querySelector(".machine-section").style.display = "none";
+      document.getElementById("payment-page").style.display = "block";
+      document.getElementById("selected-machine").innerHTML = `
+        <h3>Buying: ${name}</h3>
+        <img src="${img}" alt="${name}" style="width: 100%; border-radius: 8px; margin: 10px 0;">
+        <p>Price: $${price}</p>
+      `;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    @app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        email = request.form.get('email')
+        password = request.form.get('password')
+
+        conn = mysql.connection
+        cursor = conn.cursor()
+
+        cursor.execute("SELECT * FROM users WHERE email = %s", (email,))
+        user = cursor.fetchone()
+
+        if user:
+            email, password, is_verified, *_ = user
+
+            if not is_verified:
+                flash("Please verify your email before logging in.", "warning")
+                return redirect(url_for('login'))
+
+            if bcrypt.check_password_hash(password, password):
+                flash("Login successful!", "success")
+                return redirect(url_for('home'))  # Replace with your actual route
+            else:
+                flash("Incorrect password.", "error")
+        else:
+            flash("Email not found.", "error")
+
+        cursor.close()
+
+    return render_template('login.html')
+
+
+
+
+
+    <form method="POST">
+        {{ form.hidden_tag() }}
+        <div class="form-group">
+            {{ form.email.label(class="form-control-label") }}
+            {{ form.email(class="form-control") }}
+            {% if form.email.errors %}
+                {% for error in form.email.errors %}
+                    <p>{{ error }}</p>
+                {% endfor %}
+            {% endif %}
+        </div>
+        <div class="form-group">
+            {{ form.password.label(class="form-control-label") }}
+            {{ form.password(class="form-control") }}
+            {% if form.password.errors %}
+                {% for error in form.password.errors %}
+                    <p>{{ error }}</p>
+                {% endfor %}
+            {% endif %}
+        </div>
+        <div class="form-group form-check">
+            {{ form.remember(class="form-check-input") }}
+            {{ form.remember.label(class="form-check-label") }}
+        </div>
+        {{ form.submit(class="btn btn-success") }}
+    </form>
+    <p class="text-center">Don't have an account? <a href="signup">Register</a></p>
+
+
+
+
+    <!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mining Machine Marketplace</title>
+
+  <!-- CSS Styling -->
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      background-color: #121212;
+      color: #ddd;
+      text-align: center;
+    }
+
+    h1, h2, h3, h4 {
+      margin: 10px 0;
+    }
+
+    /* Wallet Display */
+    #wallet {
+      background: #1f1f1f;
+      color: #0f0;
+      padding: 10px;
+      border-radius: 8px;
+      margin: 10px auto;
+      width: 300px;
+      box-shadow: 0 0 20px #0f0;
+      font-size: 1.2em;
+      font-weight: bold;
+    }
+
+    /* Menu Styling */
+    .menu-icon {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      font-size: 24px;
+      cursor: pointer;
+    }
+
+    .menu {
+      display: none;
+      position: absolute;
+      top: 40px;
+      left: 10px;
+      background-color: #1f1f1f;
+      padding: 10px;
+      border-radius: 5px;
+      box-shadow: 0 0 10px #333;
+    }
+
+    .menu a {
+      display: block;
+      color: #ddd;
+      padding: 8px 0;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .menu a:hover {
+      color: #0f0;
+    }
+
+    /* Machine Container */
+    .machine-container {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 15px;
+      padding: 10px;
+      justify-content: center;
+    }
+
+    .machine {
+      background: #1e1e1e;
+      padding: 20px;
+      border-radius: 10px;
+      text-align: center;
+      transition: transform 0.2s ease-in-out;
+      box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+      cursor: pointer;
+    }
+
+    .machine img {
+      width: 80%;
+      height: auto;
+      border-radius: 5px;
+      transition: transform 0.3s ease-in-out;
+    }
+
+    .machine:hover img {
+      transform: scale(1.1);
+    }
+
+    .machine:hover {
+      transform: translateY(-5px);
+    }
+
+    /* Machine Categories */
+    .vip {
+      border: 2px solid gold;
+      box-shadow: 0 0 15px gold;
+    }
+
+    .premium {
+      border: 2px solid cyan;
+      box-shadow: 0 0 15px cyan;
+    }
+
+    .standard {
+      border: 2px solid orange;
+      box-shadow: 0 0 15px orange;
+    }
+
+    /* Footer */
+    .footer {
+      background-color: #1f1f1f;
+      padding: 10px;
+      text-align: center;
+      color: #fff;
+    }
+  </style>
+</head>
+
+<body>
+
+  <h2>Shadowrobot</h2>
+
+  <h2>Mining Machines</h2>
+
+  <!-- Menu -->
+  <div class="menu-icon" onclick="toggleMenu()">☰</div>
+  <div class="menu" id="menu">
+    <a onclick="showHome()">Home</a>
+    <a onclick="showMyMachines()">My Machines</a>
+    <a onclick="showMyWithdraw()">Withdraw</a>
+    <a>Wallet Amount: $<span id="wallet-amount">0</span></a>
+    <a onclick="logoutaccount()">logout Account</a>
+  </div>
+
+  <!-- Wallet Display -->
+  <div id="wallet">Wallet Balance: $0.00</div>
+
+
+
+ <!-- Machine Sections -->
+<div class="machine-section">
+  <h3>VIP Machines</h3>
+  <h4>(30 days run-time)</h4>
+  <div class="machine-container" id="vip-section">
+    <div class="machine vip" onclick="redirectToPayment('Bitmain Antminer D9 (1770Gh)', 5900)">
+      <img src="{{ url_for('static', filename='IMG-20250402-WA0016_1.jpg') }}" alt="Bitmain Antminer D9">
+      <h4>Bitmain Antminer D9 (1770Gh)</h4>
+      <p>Earnings: $0.15/sec</p>
+      <p>$5,900</p>
+    </div>
+    <div class="machine vip" onclick="redirectToPayment('Bitmain Antminer K7 (63.5Th)', 5400)">
+      <img src="{{ url_for('static', filename='IMG-20250402-WA0017_1.jpg') }}" alt="Bitmain Antminer K7">
+      <h4>Bitmain Antminer K7 (63.5Th)</h4>
+      <p>Earnings: $0.12/sec</p>
+      <p>$5,400</p>
+    </div>
+    <div class="machine vip" onclick="redirectToPayment('Bitmain Antminer Z15', 2300)">
+      <img src="{{ url_for('static', filename='IMG-20250402-WA0018_1.jpg') }}" alt="Bitmain Antminer Z15">
+      <h4>Bitmain Antminer Z15</h4>
+      <p>Earnings: $0.08/sec</p>
+      <p>$2,300</p>
+    </div>
+  </div>
+
+  <h3>Premium Machines</h3>
+  <h4>(21 days run-time)</h4>
+  <div class="machine-container" id="premium-section">
+    <div class="machine premium" onclick="redirectToPayment('Canaan Avalon Made A1366', 5499)">
+      <img src="{{ url_for('static', filename='IMG-20250402-WA0024_1.jpg') }}" alt="Canaan Avalon A1366">
+      <h4>Canaan Avalon Made A1366</h4>
+      <p>Earnings: $0.14/sec</p>
+      <p>$5,499</p>
+    </div>
+    <div class="machine premium" onclick="redirectToPayment('Bitmain Antminer S19 XP Hyd (255Th)', 4150)">
+      <img src="{{ url_for('static', filename='IMG-20250402-WA0025_1.jpg') }}" alt="Bitmain Antminer S19 XP">
+      <h4>Bitmain Antminer S19 XP Hyd (255Th)</h4>
+      <p>Earnings: $0.10/sec</p>
+      <p>$4,150</p>
+    </div>
+    <div class="machine premium" onclick="redirectToPayment('MicroBT WhatsMiner M56S', 4300)">
+      <img src="{{ url_for('static', filename='IMG-20250402-WA0026_1.jpg') }}" alt="MicroBT WhatsMiner M56S">
+      <h4>MicroBT WhatsMiner M56S</h4>
+      <p>Earnings: $0.11/sec</p>
+      <p>$4,300</p>
+    </div>
+  </div>
+
+  <h3>Standard Machines</h3>
+  <h4>(14 days run-time)</h4>
+  <div class="machine-container" id="standard-section">
+    <div class="machine standard" onclick="redirectToPayment('Bitmain Antminer S21 Hyd (335Th)', 5900)">
+      <img src="{{ url_for('static', filename='IMG-20250402-WA0027_1.jpg') }}" alt="Bitmain Antminer S21 Hyd">
+      <h4>Bitmain Antminer S21 Hyd (335Th)</h4>
+      <p>Earnings: $0.16/sec</p>
+      <p>$5,900</p>
+    </div>
+    <div class="machine standard" onclick="redirectToPayment('Bitmain Antminer K5 (63.5Th)', 5400)">
+      <img src="{{ url_for('static', filename='IMG-20250402-WA0028_1.jpg') }}" alt="Bitmain Antminer K5">
+      <h4>Bitmain Antminer K5 (63.5Th)</h4>
+      <p>Earnings: $0.13/sec</p>
+      <p>$5,400</p>
+    </div>
+    <div class="machine standard" onclick="redirectToPayment('MicroBT Whatsminer M50S', 2300)">
+      <img src="{{ url_for('static', filename='IMG-20250402-WA0030_1.jpg') }}" alt="MicroBT Whatsminer M50S">
+      <h4>MicroBT Whatsminer M50S</h4>
+      <p>Earnings: $0.09/sec</p>
+      <p>$2,300</p>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  <!-- My Machines Page Section -->
+  <div id="my-machines" style="display: none; padding: 20px;">
+    <h3>My Machines</h3>
+    <p style="color: #888; font-size: 1.2em;">No machine purchased yet.</p>
+  </div>
+
+  <!-- Withdraw Page Section -->
+  <div id="withdraw" style="display: none; padding: 20px;">
+    <h3>Withdraw Earnings</h3>
+    <p style="color: #888; font-size: 1.2em;">No earnings mined yet.</p>
+  </div>
+
+  <!-- Footer Section -->
+  <div class="footer">
+    <p>&copy; 2025 Shadowrobot Mining Platform</p>
+    <p>Email: <a href="mailto:info@shadowrobot.com">info@shadowrobot.com</a></p>
+  </div>
+
+  <!-- JavaScript -->
+  <script>
+    function toggleMenu() {
+      const menu = document.getElementById("menu");
+      menu.style.display = menu.style.display === "block" ? "none" : "block";
+    }
+    
+    // Ensure menu is always on top
+    document.addEventListener("DOMContentLoaded", function () {
+      document.querySelector(".menu").style.zIndex = "1000";
+    });
+    
+    function showMyMachines() {
+      document.querySelector('.machine-section').style.display = 'none';
+      document.getElementById('withdraw').style.display = 'none';
+      document.getElementById('my-machines').style.display = 'block';
+    }
+    
+    function showMyWithdraw() {
+      document.querySelector('.machine-section').style.display = 'none';
+      document.getElementById('my-machines').style.display = 'none';
+      document.getElementById('withdraw').style.display = 'block';
+    }
+    
+    function showHome() {
+      document.getElementById('my-machines').style.display = 'none';
+      document.getElementById('withdraw').style.display = 'none';
+      document.querySelector('.machine-section').style.display = 'block';
+    }
+    
+    // Fix redirect function
+    function redirectToPayment(machineName, price) {
+      const hasPaymentMethod = false; // simulate this, change based on real logic later
+    
+      if (!hasPaymentMethod) {
+        // Store selection in sessionStorage (for better handling of the session)
+        sessionStorage.setItem("selectedMachine", machineName);
+        sessionStorage.setItem("selectedPrice", price);
+        // Show modal
+        document.getElementById("paymentModal").style.display = "flex";
+      } else {
+        // If payment method exists, redirect using the suggested URL structure
+        const paymentUrl = `/payment/${encodeURIComponent(machineName)}/${price}`;
+        window.location.href = paymentUrl;
+      }
+    }
+    
+    function closeModal() {
+      document.getElementById("paymentModal").style.display = "none";
+    }
+    
+    function goToPaymentPage() {
+      const machine = sessionStorage.getItem("selectedMachine");
+      const price = sessionStorage.getItem("selectedPrice");
+    
+      // Ensure the values are present before redirecting
+      if (machine && price) {
+        // Redirect using the suggested URL structure
+        const paymentUrl = `/payment/${encodeURIComponent(machine)}/${price}`;
+        window.location.href = paymentUrl;
+      } else {
+        console.error("No machine or price found in session storage.");
+        // Handle the error case (e.g., show a warning to the user)
+      }
+    }
+    
+    
+    
+    function logoutaccount() {
+      if (confirm("Are you sure you want to logout?")) {
+        alert("Account logged out!");
+        window.location.href = "/"; // Change to your actual home page URL
+      }
+    }
+    
+    
+  </script>
+<!-- Payment Method Modal -->
+<div id="paymentModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%;
+background-color: rgba(0,0,0,0.7); z-index:9999; justify-content:center; align-items:center;">
+  <div style="background:#1f1f1f; padding:20px; border-radius:10px; width:300px; text-align:center; box-shadow:0 0 10px #0f0;">
+    <p style="margin-bottom:20px;">No payment method added yet.</p>
+    <button onclick="goToPaymentPage()" style="padding:10px 15px; background:#0f0; border:none; border-radius:5px; cursor:pointer; margin-right:10px;">Add Payment Method</button>
+    <button onclick="closeModal()" style="padding:10px 15px; background:#444; border:none; border-radius:5px; cursor:pointer;">Cancel</button>
+  </div>
+</div>
+
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    @app.route('/login', methods=['GET', 'POST'])
+    def login():
+        form = LoginForm()
+        if form.validate_on_submit():
+            email = form.email.data
+            password = form.password.data
+            
+            cnx = mysql.connection
+            cur = cnx.cursor()
+            cur.execute("SELECT * FROM users WHERE email = %s", (email,))
+            user = cur.fetchone()
+            cur.close()
+    
+            if user and bcrypt.check_password_hash(user['password'], password):  # 'password' is the column name
+                login_user(user)
+                flash('Login successful!')
+                return redirect(url_for('home'))
+            else:
+                flash('Invalid email or password.')
+        
+        return render_template("login.html", form=form)
+    

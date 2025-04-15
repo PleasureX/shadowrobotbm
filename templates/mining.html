@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mining Machine Marketplace</title>
+
+  <!-- CSS Styling -->
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      background-color: #121212;
+      color: #ddd;
+      text-align: center;
+    }
+
+    h1, h2, h3, h4 {
+      margin: 10px 0;
+    }
+
+    /* Wallet Display */
+    #wallet {
+      background: #1f1f1f;
+      color: limegreen;
+      padding: 10px;
+      border-radius: 8px;
+      margin: 10px auto;
+      width: 150px;
+      box-shadow: 0 0 20px limegreen;
+      font-size: 0.8em;
+      font-weight: bold;
+    }
+
+    /* Menu Styling */
+    .menu-icon {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      font-size: 24px;
+      cursor: pointer;
+    }
+
+    .menu {
+      display: none;
+      position: absolute;
+      top: 40px;
+      left: 10px;
+      background-color: #1f1f1f;
+      padding: 10px;
+      border-radius: 5px;
+      box-shadow: 0 0 10px #333;
+    }
+
+    .menu a {
+      display: block;
+      color: #ddd;
+      padding: 8px 0;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .menu a:hover {
+      color: limegreen;
+    }
+
+    /* Machine Container */
+    .machine-container {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 15px;
+      padding: 10px;
+      justify-content: center;
+    }
+
+    .machine {
+      background: #1e1e1e;
+      padding: 20px;
+      border-radius: 10px;
+      text-align: center;
+      transition: transform 0.2s ease-in-out;
+      box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+      cursor: pointer;
+    }
+
+    .machine img {
+      width: 80%;
+      height: auto;
+      border-radius: 5px;
+      transition: transform 0.3s ease-in-out;
+    }
+
+    .machine:hover img {
+      transform: scale(1.1);
+    }
+
+    .machine:hover {
+      transform: translateY(-5px);
+    }
+
+    /* Machine Categories */
+    .vip {
+      border: 2px solid gold;
+      box-shadow: 0 0 15px gold;
+    }
+
+    .premium {
+      border: 2px solid cyan;
+      box-shadow: 0 0 15px cyan;
+    }
+
+    .standard {
+      border: 2px solid orange;
+      box-shadow: 0 0 15px orange;
+    }
+
+    /* Footer */
+    .footer {
+      background-color: #1f1f1f;
+      padding: 10px;
+      text-align: center;
+      color: #fff;
+    }
+  /* Profile Image */
+    #profile-section img {
+      object-fit: cover;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      border: 2px solid #888;
+    }
+    
+/* Crypto Balances Marquee */
+#crypto-balances {
+  overflow: hidden;
+  white-space: nowrap;
+  background: #000;
+  color: limegreen;
+  padding: 10px 0;
+  margin: 10px auto;
+  border-radius: 5px;
+  width: 90%;
+  font-size: 0.9em;
+  font-weight: bold;
+  box-shadow: 0 0 10px limegreen;
+}
+
+.scrolling-text {
+  display: inline-block;
+  padding-left: 100%;
+  animation: scroll-left 20s linear infinite;
+}
+
+@keyframes scroll-left {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+.delete-account-btn {
+  position: absolute;
+  top: 500px;
+  left: 30px;
+  padding: 10px 20px;
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  text-decoration: none;
+  font-weight: bold;
+  cursor: pointer;
+  z-index: 9999;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+
+.delete-account-btn:hover {
+  background-color: #c0392b;
+}
+#profile-section {
+  background-color: #1f1f1f;
+  margin: 20px auto;
+  padding: 20px;
+  width: 90%;
+  border-radius: 10px;
+  box-shadow: 0 0 10px limegreen;
+}
+
+
+
+  </style>
+</head>
+
+<body>
+
+
+<!-- Mini Profile Top Right -->
+<div style="position: absolute; top: 10px; right: 10px; text-align: center;" onclick="toggleProfileDropdown()">
+  <img src="{{ url_for('static', filename='uploads/' + (user.profile_picture or 'default.jpg')) }}" alt="Profile Picture"
+       style="width: 50px; height: 50px; border-radius: 50%; border: 2px solid #888; cursor: pointer;">
+  <div style="color: #fff; font-size: 0.9em;">@{{ user.username }}</div>
+</div>
+
+
+
+<!-- Profile Dropdown -->
+  <div id="profile-dropdown" style="display: none; position: absolute; right: 10px; top: 70px; background: #1f1f1f; border-radius: 5px; box-shadow: 0 0 10px #333; z-index: 1000;">
+    <a href="crypto" style="display: block; padding: 10px; color: limegreen; text-decoration: none; border-bottom: 1px solid #333;">Verify Account</a>
+    <a href="#" onclick="showProfile(); toggleProfileDropdown();" style="display: block; padding: 10px; color: limegreen; text-decoration: none;">Visit Profile Page</a>
+  </div>
+
+
+  <h2>Shadowrobot</h2>
+
+  <h2>Mining Machines</h2>
+
+  <div style="color: gold; font-size: 1.5em; margin-top: 10px; margin-left: 600px;">
+    <img src="{{ url_for('static', filename='coin.png') }}" alt="Points" style="width: 40px; vertical-align: middle;">
+    {{ user.points }} points
+  </div>
+  
+  
+  <!-- Menu -->
+  <div class="menu-icon" onclick="toggleMenu()">☰</div>
+  <div class="menu" id="menu">
+    <a onclick="showHome()">Home</a>
+     <a onclick="showProfile()">Profile</a>
+    <a onclick="showMyMachines()">My Machines</a>
+    <a onclick="showMyWithdraw()">Withdraw</a>
+    <a>Wallet Amount: $<span id="wallet-amount">0</span></a>
+    <a onclick="logoutaccount()">logout Account</a>
+   
+  
+  </div>
+
+  <!-- Wallet Display -->
+  <div id="wallet">Wallet Balance: $0.00</div>
+  
+  <div id="crypto-balances">
+  <div class="scrolling-text" id="crypto-scroll">
+  <img src="/static/bitcoin.png" style="height: 18px;"> Bitcoin: 0.00 |
+  <img src="/static/bnb.png" style="height: 18px;"> BNB: 0.00 |
+  <img src="/static/etherum.png" style="height: 18px;"> Ethereum: 0.00 |
+  <img src="/static/usdt.png" style="height: 18px;"> USDT (ERC20): 0.00 |
+  <img src="/static/bitcoin-cash.png" style="height: 18px;"> Bitcoin Cash: 0.00 |
+  <img src="/static/arbitrum.png" style="height: 18px;"> Arbitrum: 0.00 |
+  <img src="/static/optimism.png" style="height: 18px;"> Optimism: 0.00 |
+  
+</div>
+
+</div>
+
+
+
+<!-- Machine Sections -->
+<div class="machine-section">
+
+  <!-- VIP Machines -->
+  <h3>VIP Machines</h3>
+  <h4>(30 days run-time)</h4>
+  <div class="machine-container" id="vip-section">
+
+    <div class="machine vip" onclick="redirectToPayment('Bitmain Antminer D9 (1770Gh)', 357)">
+      <img src="{{ url_for('static', filename='IMG-20250402-WA0016_1.jpg') }}" alt="Bitmain Antminer D9">
+      <h4>Bitmain Antminer D9 (1770Gh)</h4>
+      <p>Hash Rate: 1770 Gh/s</p>
+      <p>Power Consumption: 2800W</p>
+      <p>Estimated Daily Earnings: 0.00006 BTC (approx. $2.50)</p>
+      <p>Points: 357 <img src="{{ url_for('static', filename='coin.png') }}" alt="Points" style="width: 40px; vertical-align: middle;"></p>
+    </div>
+
+    <div class="machine vip" onclick="redirectToPayment('Bitmain Antminer K7 (63.5Th)', 300)">
+      <img src="{{ url_for('static', filename='IMG-20250402-WA0017_1.jpg') }}" alt="Bitmain Antminer K7">
+      <h4>Bitmain Antminer K7 (63.5Th)</h4>
+      <p>Hash Rate: 63.5 Th/s</p>
+      <p>Power Consumption: 3000W</p>
+      <p>Estimated Daily Earnings: 0.00004 BTC (approx. $1.70)</p>
+      <p>Points: 300 <img src="{{ url_for('static', filename='coin.png') }}" alt="Points" style="width: 40px; vertical-align: middle;"></p>
+    </div>
+
+    <div class="machine vip" onclick="redirectToPayment('Bitmain Antminer Z15', 243)">
+      <img src="{{ url_for('static', filename='IMG-20250402-WA0018_1.jpg') }}" alt="Bitmain Antminer Z15">
+      <h4>Bitmain Antminer Z15</h4>
+      <p>Hash Rate: 420 KSol/s</p>
+      <p>Power Consumption: 1510W</p>
+      <p>Estimated Daily Earnings: 0.00005 BTC (approx. $2.10)</p>
+    
+      <p>Points: 243  <img src="{{ url_for('static', filename='coin.png') }}" alt="Points" style="width: 40px; vertical-align: middle;"></p>
+    </div>
+  </div>
+
+  <!-- Premium Machines -->
+  <h3>Premium Machines</h3>
+  <h4>(21 days run-time)</h4>
+  <div class="machine-container" id="premium-section">
+
+    <div class="machine premium" onclick="redirectToPayment('Canaan Avalon Made A1366', 257)">
+      <img src="{{ url_for('static', filename='IMG-20250402-WA0024_1.jpg') }}" alt="Canaan Avalon A1366">
+      <h4>Canaan Avalon Made A1366</h4>
+      <p>Hash Rate: 130 Th/s</p>
+      <p>Power Consumption: 3200W</p>
+      <p>Estimated Daily Earnings: 0.003 ETH (approx. $5.00)</p>
+      <p>Points: 257 <img src="{{ url_for('static', filename='coin.png') }}" alt="Points" style="width: 40px; vertical-align: middle;"></p>
+    </div>
+
+    <div class="machine premium" onclick="redirectToPayment('Bitmain Antminer S19 XP Hyd (255Th)', 414)">
+      <img src="{{ url_for('static', filename='IMG-20250402-WA0025_1.jpg') }}" alt="Bitmain Antminer S19 XP">
+      <h4>Bitmain Antminer S19 XP Hyd (255Th)</h4>
+      <p>Hash Rate: 255 Th/s</p>
+      <p>Power Consumption: 5300W</p>
+      <p>Estimated Daily Earnings: 0.00007 BTC (approx. $3.00)</p>
+      <p>Points: 414 <img src="{{ url_for('static', filename='coin.png') }}" alt="Points" style="width: 40px; vertical-align: middle;"></p>
+    </div>
+
+    <div class="machine premium" onclick="redirectToPayment('MicroBT WhatsMiner M56S', 371)">
+      <img src="{{ url_for('static', filename='IMG-20250402-WA0026_1.jpg') }}" alt="MicroBT WhatsMiner M56S">
+      <h4>MicroBT WhatsMiner M56S</h4>
+      <p>Hash Rate: 230 Th/s</p>
+      <p>Power Consumption: 5000W</p>
+      <p>Estimated Daily Earnings: 0.0025 ETH (approx. $4.30)</p>
+      <p>Points: 371 <img src="{{ url_for('static', filename='coin.png') }}" alt="Points" style="width: 40px; vertical-align: middle;"></p>
+    </div>
+  </div>
+
+  <!-- Standard Machines -->
+  <h3>Standard Machines</h3>
+  <h4>(14 days run-time)</h4>
+  <div class="machine-container" id="standard-section">
+
+    <div class="machine standard" onclick="redirectToPayment('Bitmain Antminer S21 Hyd (335Th)', 500)">
+      <img src="{{ url_for('static', filename='IMG-20250402-WA0027_1.jpg') }}" alt="Bitmain Antminer S21 Hyd">
+      <h4>Bitmain Antminer S21 Hyd (335Th)</h4>
+      <p>Hash Rate: 335 Th/s</p>
+      <p>Power Consumption: 5300W</p>
+      <p>Estimated Daily Earnings: 0.00008 BTC (approx. $3.50)</p>
+      <p>Points: 500 <img src="{{ url_for('static', filename='coin.png') }}" alt="Points" style="width: 40px; vertical-align: middle;"></p>
+    </div>
+
+    <div class="machine standard" onclick="redirectToPayment('Bitmain Antminer K5 (63.5Th)', 271)">
+      <img src="{{ url_for('static', filename='IMG-20250402-WA0028_1.jpg') }}" alt="Bitmain Antminer K5">
+      <h4>Bitmain Antminer K5 (63.5Th)</h4>
+      <p>Hash Rate: 63.5 Th/s</p>
+      <p>Power Consumption: 1800W</p>
+      <p>Estimated Daily Earnings: 0.000035 BTC (approx. $1.40)</p>
+      <p>Points: 271 <img src="{{ url_for('static', filename='coin.png') }}" alt="Points" style="width: 40px; vertical-align: middle;"></p>
+    </div>
+
+    <div class="machine standard" onclick="redirectToPayment('MicroBT Whatsminer M50S', 329)">
+      <img src="{{ url_for('static', filename='IMG-20250402-WA0030_1.jpg') }}" alt="MicroBT Whatsminer M50S">
+      <h4>MicroBT Whatsminer M50S</h4>
+      <p>Hash Rate: 126 Th/s</p>
+      <p>Power Consumption: 3276W</p>
+      <p>Estimated Daily Earnings: 0.000045 BTC (approx. $1.85)</p>
+      <p>Points: 329 <img src="{{ url_for('static', filename='coin.png') }}" alt="Points" style="width: 40px; vertical-align: middle;"></p>
+    </div>
+  </div>
+</div>
+
+
+  <!-- Additional Info -->
+  <div style="margin-top: 30px; font-style: italic; font-size: 14px;">
+    <p>Note: Earnings estimates are based on current market conditions and network difficulty. Actual returns may vary.</p>
+    <p><strong>Electricity Cost:</strong> $0.05 per kWh | <strong>Maintenance Fee:</strong> 10% of earnings</p>
+    <p>All machines are subject to electricity costs and a 10% maintenance fee deducted from daily earnings.</p>
+    <p>Customer Reviews, Ratings, and Testimonials will be available soon to increase transparency.</p>
+  </div>
+
+</div>
+
+
+
+
+
+  <!-- My Machines Page Section -->
+  <div id="my-machines" style="display: none; padding: 20px;">
+    <h3>My Machines</h3>
+    <p style="color: #888; font-size: 1.2em;">No machine purchased yet.</p>
+  </div>
+
+  <!-- Withdraw Page Section -->
+  <div id="withdraw" style="display: none; padding: 20px;">
+    <h3>Withdraw Earnings</h3>
+    <p style="color: #888; font-size: 1.2em;">No earnings mined yet.</p>
+  </div>
+  
+  
+  
+<!-- Profile Page Section -->
+  <div id="profile-section" style="display: none; padding: 20px;">
+
+    
+    <h3>My Profile</h3>
+
+    <div style="margin-top: 5px; margin-left: 500px; font-size: 1.50em; color: #ccc;">
+      Referral link:
+      <input id="referralLink" type="text" 
+             value="{{ request.url_root }}signup?ref={{ user.username }}" 
+             readonly 
+             onclick="this.select();" 
+             style="width: 240px; font-size: 0.7em; margin-left: 20px; color: #fff; background: #333; border: none;">
+      
+      <span onclick="copyReferralLink()" 
+            title="Copy to clipboard" 
+            style="cursor: pointer; margin-left: 10px; font-size: 0.8em; color: #fff;">📋</span>
+      
+      <span id="copyStatus" style="margin-left: 10px; font-size: 0.7em; color: lightgreen; display: none;">
+        Copied!
+      </span>
+    </div>
+    
+
+    <div style="margin-bottom: 10px;">
+      <img src="{{ url_for('static', filename='uploads/' + (user.profile_picture or 'default.jpg')) }}" alt="Profile Picture"
+       style="width: 100px; height: 100px; border-radius: 50%; border: 2px solid #888; cursor: pointer;">
+    </div>
+    <div style="color: #fff; font-size: 1.2em;">@{{ user.username }}</div>
+    <form method="POST" action="{{ url_for('upload_profile_picture') }}" enctype="multipart/form-data">
+      <input type="file" name="profile_picture" accept="image/*" required>
+      <button type="submit">Upload</button>
+    </form>
+    
+    
+
+  <span style="background-color: #888; padding: 5px 10px; border-radius: 20px; font-size: 1.0em;">Unverified</span>
+
+  <form id="deleteForm" method="POST" action="/delete_account">
+    <button type="button" class="delete-account-btn" onclick="deleteAccount()">Delete Account</button>
+  </form>
+
+  <div style="margin-top: 30px; background-color: #1f1f1f; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px limegreen;">
+  <h4 style="color: limegreen;">Wallet Access</h4>
+
+  <!-- Verification Section -->
+  <p style="color: #f00;">Wallet Address: <strong>Complete Verification</strong></p>
+  <a href="crypto" style="display: inline-block; margin: 10px 0; padding: 8px 16px; background-color: limegreen; color: #000; font-weight: bold; text-decoration: none; border-radius: 5px;">Verify Now</a>
+
+
+  <!-- wallet address -->
+  <div style="margin-top: 20px;">
+    <label style="display: block; margin-bottom: 5px;">Wallet Address:</label>
+    <input type="text" placeholder="no wallet address" style="width: 80%; padding: 8px; border-radius: 5px; border: none; background-color: #333; color: #fff;" readonly>
+  </div>
+
+  <!-- Private Key Field -->
+  <div style="margin-top: 20px;">
+    <label style="display: block; margin-bottom: 5px;">Private Key/Seed Phrase:</label>
+    <input type="text" placeholder="no private key: xxxxx xxxx xxxxx..." style="width: 80%; height: 60px; padding: 8px; border-radius: 5px; border: none; background-color: #333; color: #fff;" readonly>
+  </div>
+
+  <!-- Crypto Networks -->
+  <div style="margin-top: 20px; text-align: left;">
+    <h4 style="color: limegreen;">Supported Networks:</h4>
+    <ul style="list-style: none; padding-left: 0;">
+      <li><img src="/static/bitcoin.png" style="height: 30px;"> Bitcoin </li>
+      <li><img src="/static/etherum.png" style="height:30px;"> Ethereum </li>
+      <li><img src="/static/usdt.png" style="height: 30px;"> USDT (ERC20)</li>
+      <li><img src="/static/bitcoin-cash.png" style="height: 30px;"> Bitcoin Cash</li>
+      <li><img src="/static/polygon.png" style="height: 30px;"> Polygon</li>
+      <li><img src="/static/arbitrum.png" style="height: 30px;"> Arbitrum</li>
+      <li><img src="/static/optimism.png" style="height: 30px"> Optimism</li>
+      
+      
+      
+    </ul>
+  </div>
+</div>
+
+</div>
+
+
+  <!-- Footer Section -->
+  <div class="footer">
+    <p>&copy; 2025 Shadowrobot Mining Platform</p>
+    <p>Email: <a href="mailto:info@shadowrobot.com">info@shadowrobot.com</a></p>
+  </div>
+
+  <!-- JavaScript -->
+  <script>
+    function toggleMenu() {
+      const menu = document.getElementById("menu");
+      menu.style.display = (menu.style.display === "block") ? "none" : "block";
+    }
+  
+    function toggleProfileDropdown() {
+      const dropdown = document.getElementById("profile-dropdown");
+      dropdown.style.display = (dropdown.style.display === "block") ? "none" : "block";
+    }
+  
+    function showProfile() {
+      document.getElementById("profile-section").style.display = "block";
+      document.querySelector(".machine-section").style.display = "none";
+      document.getElementById("my-machines").style.display = "none";
+      document.getElementById("withdraw").style.display = "none";
+    }
+  
+    function showMyMachines() {
+      document.getElementById("my-machines").style.display = "block";
+      document.querySelector(".machine-section").style.display = "none";
+      document.getElementById("profile-section").style.display = "none";
+      document.getElementById("withdraw").style.display = "none";
+    }
+  
+    function showMyWithdraw() {
+      document.getElementById("withdraw").style.display = "block";
+      document.querySelector(".machine-section").style.display = "none";
+      document.getElementById("profile-section").style.display = "none";
+      document.getElementById("my-machines").style.display = "none";
+    }
+  
+    function showHome() {
+      document.querySelector(".machine-section").style.display = "block";
+      document.getElementById("profile-section").style.display = "none";
+      document.getElementById("my-machines").style.display = "none";
+      document.getElementById("withdraw").style.display = "none";
+    }
+  
+        // Delete Account Function
+        function deleteAccount() {
+          if (confirm("Are you sure you want to delete your account?")) {
+            fetch('/delete_account', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json'
+              }
+            })
+            .then(response => {
+              if (response.ok) {
+                alert("Account deleted!");
+                window.location.href = "/"; // Redirect to homepage
+              } else {
+                alert("Failed to delete account. Try again.");
+              }
+            })
+            .catch(error => {
+              console.error("Error:", error);
+              alert("An error occurred.");
+            });
+          }
+        }
+  
+    // Fix redirect function
+    function redirectToPayment() {
+      // Just show the modal on click
+      document.getElementById("paymentModal").style.display = "flex";
+    }
+  
+    function closeModal() {
+      document.getElementById("paymentModal").style.display = "none";
+    }
+  
+    function goToPaymentPage() {
+      // Redirect to the payment page
+      window.location.href = "/crypto";
+    }
+
+    function logoutaccount() {
+      if (confirm("Are you sure you want to logout?")) {
+        alert("Account logged out!");
+        window.location.href = "login"; // Change to your actual home page URL
+      }
+    }
+    function copyReferralLink() {
+      const input = document.getElementById("referralLink");
+      input.select();
+      input.setSelectionRange(0, 99999); // For mobile devices
+  
+      document.execCommand("copy");
+  
+      // Show copied confirmation
+      const status = document.getElementById("copyStatus");
+      status.style.display = "inline";
+      setTimeout(() => {
+        status.style.display = "none";
+      }, 2000);
+    }
+    
+  </script>
+
+  
+<!-- Payment Method Modal -->
+<div id="paymentModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%;
+background-color: rgba(0,0,0,0.7); z-index:9999; justify-content:center; align-items:center;">
+  <div style="background:#1f1f1f; padding:20px; border-radius:10px; width:300px; text-align:center; box-shadow:0 0 15px red;">
+    <p style="margin-bottom:20px; color: #fff;">Account not verified!</p> <p  style="margin-bottom:20px; color: #fff;">complete account setup</p>
+    <button onclick="goToPaymentPage()" style="padding:10px 15px; background:#ff4d4d; color:#fff; border:none; border-radius:5px; cursor:pointer; margin-right:10px;">Verify Account</button>
+    <button onclick="closeModal()" style="padding:10px 15px; background:#444; color:#fff; border:none; border-radius:5px; cursor:pointer;">Cancel</button>
+  </div>
+</div>
+
+
+
+</body>
+
+</html>

